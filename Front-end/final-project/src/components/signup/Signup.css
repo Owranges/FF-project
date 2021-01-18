@@ -1,0 +1,49 @@
+/* .signComponent{
+    height: 100vh;
+} */
+.signup{
+    display: flex;
+    padding: 1% 0%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #181B16;
+    color: #6F9584 ;
+}
+
+.signupMsg{
+   align-items: center;
+}
+
+.formSignup{
+    /* margin: 1% 0% 4% 0%; */
+    /* height: 230px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.formSignup div{
+    display: flex;
+    /* margin: 5% 0%; */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+}
+.formSignup div input{
+    background-color: #C0F5DE;
+    border: none;
+}
+.formSignup div label{
+    align-self: flex-start;
+}
+.formSignup div button{
+    margin-top: 25%;
+}
+
+.parrallax2 {
+    height: 500px !important;
+    background: url(../../Img/SignupSigninImg/ff67.jpg) no-repeat center / cover !important;
+    /* background-attachment: fixed !important;  */
+}

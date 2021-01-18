@@ -1,0 +1,21 @@
+/* *{
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+}
+.footer{
+    display: flex;
+    height: auto;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #1b2625;
+    color: #5BFFB5;
+    font-size: 0.6em;
+}
+.nav a:link {
+    color: #5BFFB5;
+    text-decoration: none
+}
+.nav a:visited {
+    color: #5BFFB5;
+} */

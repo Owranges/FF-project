@@ -1,0 +1,50 @@
+/* .signComponent{
+    height: 100vh;
+} */
+.signin{
+    display: flex;
+    height: 100%;
+    padding: 1% 0%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #181B16;
+    color: #6F9584 ;
+}
+
+.signinMsg{
+   align-items: center;
+}
+
+.formSingin{
+    margin: 1% 0% 4% 0%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    
+    flex-direction: column;
+}
+.formSingin div{
+    display: flex;
+    margin: 5% 0%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+}
+.formSingin div input{
+    background-color: #C0F5DE;
+    border: none;
+}
+.formSingin div label{
+    align-self: flex-start;
+}
+.formSingin div button{
+    margin-top: 25%;
+}
+
+.parrallax2 {
+    height: 500px !important;
+    background: url(../../Img/SignupSigninImg/ff67.jpg) no-repeat center / cover !important;
+    /* background-attachment: fixed !important;  */
+}

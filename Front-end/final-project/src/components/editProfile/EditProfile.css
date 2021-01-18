@@ -1,0 +1,58 @@
+.editProfileDiv{
+    background: url("../../Img/EditProfileImg/ff7swordbuster.png")   no-repeat center ;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    
+    max-width: 100%;
+    min-height: calc(100vh - 35px);
+        /* display: block; */
+}
+
+.editProfile{
+    display: flex;
+    height: 100%;
+    padding-left: 5%;
+    padding-top: 1%;
+    flex-direction: column;
+    color: #6F9584 ;
+    opacity: 0.9;
+}
+
+.editProfileMsg{
+    
+    display: flex;
+    height: 100%;
+    padding: 1% 0% 0% 7%;
+    flex-direction: column;
+    color: #6F9584 ;
+}
+
+.formEditProfile{
+    margin: 1% 0% 4% 0%;
+    height: auto;
+    display: flex;
+    /* justify-content: center; */
+    
+    flex-direction: column;
+}
+.formEditProfile div{
+    display: flex;
+    padding: 1% 2%;
+    flex-direction: column;
+    max-width: 25%;
+    
+}
+.formEditProfile div input{
+    background-color: #C0F5DE;
+    border: none;
+}
+.formEditProfile div label{
+    align-self: flex-start;
+}
+
+.forms-btn{
+    padding-top: 1%;
+    padding-left: 9%;
+}
