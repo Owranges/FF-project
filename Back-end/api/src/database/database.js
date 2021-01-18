@@ -24,7 +24,7 @@ function createTableUser() {
 
     connection.query(myTable, (err, results, fields) => {
         if (err) throw err;
-        console.log('is k');
+
     });
 }
 function createTableSubjetForum() {
@@ -40,7 +40,7 @@ function createTableSubjetForum() {
 
     connection.query(myTable, (err, results, fields) => {
         if (err) throw err;
-        console.log('is k');
+
     });
 }
 function createTableCategorySubject() {
@@ -51,7 +51,7 @@ function createTableCategorySubject() {
     )`;
     connection.query(myTable, (err, results, fields) => {
         if (err) throw err;
-        console.log('is k');
+
     });
 }
 function createTableCommentaries() {
@@ -67,7 +67,7 @@ function createTableCommentaries() {
 
     connection.query(myTable, (err, results, fields) => {
         if (err) throw err;
-        console.log('is k');
+
     });
 }
 function createTableArticlesAdmin() {
@@ -80,7 +80,7 @@ function createTableArticlesAdmin() {
 
     connection.query(myTable, (err, results, fields) => {
         if (err) throw err;
-        console.log('is k');
+
     });
 }
 function createTableImageArticles() {
@@ -94,7 +94,7 @@ function createTableImageArticles() {
 
     connection.query(myTable, (err, results, fields) => {
         if (err) throw err;
-        console.log('is k');
+
     });
 }
 connection.connect((err) => {
