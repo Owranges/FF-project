@@ -7,14 +7,21 @@ const config = require("../modules/config")
 const forumRoutes = async function (router, con) {
 
     // CREATE SUBJECT
-    await router.post("/subject/create", verif_token, (req, res) => {
+    await router.post("/subject/create", (req, res) => {
         try {
-            let id = req.body.id;
-            let contained = req.body.contained;
-            let idSubject = req.body.idCategorySubject;
+            // let id = req.body.id;
+            // let contained = req.body.contained;
+            // let idSubject = req.body.idCategorySubject;
+            let myDate = Date(Date.now());
+            console.log(myDate);
+            let object = {
+                id_utilisateur: req.body.id_utilisateur,
+                date: Date(Date.now()),
+                contenu: req.body.contained,
+                id_catégories_sujet: req.body.idCategorySubject
+            }
 
-            let sql = `INSERT INTO sujet_forum (id_utilisateur, date, contenu, id_catégories_sujet) VALUES('${id}',NOW(),'${contained}','${idSubject}');`;
-            con.query(sql, (err, result) => {
+            con.query(`INSERT INTO sujet_forum SET ?`, object, (err, result) => {
                 if (err) throw err;
                 res.status(200).send("Subject well inserted");
             });
@@ -31,7 +38,7 @@ const forumRoutes = async function (router, con) {
             let idSubject = req.body.idSubject;
             // let idCategory = req.body.idCategory;
 
-            let sql = `INSERT INTO commentaires (id_auteur, date_commentaires, contenu_commentaires, id_sujet_forum) VALUES('${idAuthor}',NOW(),'${contained}','${idSubject}')`;
+            let sql = `INSERT INTO commentaires SET id_auteur = '${idAuthor}',NOW(),contenu_commentaires = '${contained}', id_sujet_forum = '${idSubject}'`;
             con.query(sql, (err, result) => {
                 if (err) throw err;
                 res.status(200).send("New commentary added")

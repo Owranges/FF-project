@@ -36,7 +36,7 @@ const userRoutes = async function (router, con) {
                     res.status(200).send("This email is already in use");
                 } else {
                     bcrypt.hash(req.body.password, saltRounds).then((hashPassword) => {
-                        let sql = `INSERT INTO utilisateurs (email, prenom, pseudo, password, avatar, administ) VALUES('${req.body.email}','${req.body.prenom}','${req.body.pseudo}','${hashPassword}','${req.body.avatar}','${admin}');`;
+                        let sql = `INSERT INTO utilisateurs SET email = '${req.body.email}', prenom = '${req.body.prenom}', pseudo = '${req.body.pseudo}', password = '${hashPassword}', avatar = '${req.body.avatar}', administ = '${admin}';`;
                         con.query(sql, (err, result) => {
                             if (err) throw err;
                             res.status(200).send("users well inserted");

@@ -15,7 +15,7 @@ const adminRoutes = async function (router, con) {
             con.query(checkAdmin, (err, result) => {
                 if (err) throw err;
                 else if (result[0].administ == 1) {
-                    let sql = `INSERT INTO catégories_sujet (nom) VALUES('${req.body.nom}')`;
+                    let sql = `INSERT INTO catégories_sujet SET nom ='${req.body.nom}'`;
 
                     con.query(sql, (err, results) => {
                         if (err) throw err;
