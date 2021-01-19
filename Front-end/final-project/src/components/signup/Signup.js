@@ -26,14 +26,14 @@ function Signup(props) {
         axios.post("http://localhost:8000/user/sign-up", formValues)
             .then(response => {
                 console.log(response);
-                if (response.data === "This email is already in use") {
-                    setIncorrect(false)
-                }
-                else if (response.data) {
+                if (response.data) {
                     props.history.push("/sign-in");
                 }
             }).catch(err => {
-                console.log(err);
+                console.log(err)
+                if (err.response.status == 403) {
+                    setIncorrect(false)
+                };
             })
     }
 

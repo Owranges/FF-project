@@ -23,14 +23,15 @@ function EditProfile(props) {
     const getUserInfo = () => {
         axios.get(`http://localhost:8000/user/${props.signinStore.userInfo.id}`)
             .then(response => {
-                if (response.data === "This user Id doesn't exist") {
-                    setIncorrect(false)
-                }
-                else if (response.data) {
+                if (response.data) {
                     setInfoUser(response.data[0])
                 }
             }).catch(err => {
-                console.log(err);
+                console.log(err)
+                if (err.response.status == 403) {
+                    console.log('im in the catch');
+                    setIncorrect(false)
+                };
             })
     };
 
@@ -44,28 +45,28 @@ function EditProfile(props) {
 
     const formSubmit = () => {
         const formValues = {
-            email: email,
-            password: password,
-            pseudo: pseudo,
-            prenom: firstname,
-            avatar: avatar,
+            email: email || infoUser.email,
+            password: password || infoUser.password,
+            pseudo: pseudo || infoUser.pseudo,
+            prenom: firstname || infoUser.prenom,
+            avatar: avatar || infoUser.avatar,
             id: infoUser.id
         }
+        console.log(formValues);
         const headers = {
             "Content-Type": "application/json",
             authorization: props.signinStore.userToken,
         };
         axios.put(`http://localhost:8000/user/edit`, formValues, { headers: headers })
             .then(response => {
-                if (response.data === "This user Id doesn't exist") {
-                    setIncorrect(false)
-                }
-                else if (response) {
-                    console.log(response);
-
+                if (response) {
+                
                 }
             }).catch(err => {
-                console.log(err);
+                console.log(err)
+                if (err.response.status == 403) {
+                    setIncorrect(false)
+                };
             })
     };
 

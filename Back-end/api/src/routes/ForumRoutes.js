@@ -7,16 +7,17 @@ const config = require("../modules/config")
 const forumRoutes = async function (router, con) {
 
     // CREATE SUBJECT
-    await router.post("/subject/create", (req, res) => {
+    await router.post("/subject/create",verif_token, (req, res) => {
         try {
-            // let id = req.body.id;
-            // let contained = req.body.contained;
-            // let idSubject = req.body.idCategorySubject;
-            let myDate = Date(Date.now());
-            console.log(myDate);
+            if(!req.body.id_utilisateur || req.body.id_utilisateur == "" ) throw "id_utilisateur id is required"
+            if(!req.body.contained || req.body.contained == "") throw "contained is required"
+            if(!req.body.idCategorySubject || req.body.idCategorySubject == "") throw "subject category id is required"
+
+            let todayDate = new Date().toISOString().slice(0,10);
+
             let object = {
                 id_utilisateur: req.body.id_utilisateur,
-                date: Date(Date.now()),
+                date: todayDate,
                 contenu: req.body.contained,
                 id_catégories_sujet: req.body.idCategorySubject
             }
@@ -33,40 +34,52 @@ const forumRoutes = async function (router, con) {
     // CREATE A COMMENTARY
     await router.post("/subject/commentaries", (req, res) => {
         try {
-            let idAuthor = req.body.idAuthor;
-            let contained = req.body.contained;
-            let idSubject = req.body.idSubject;
-            // let idCategory = req.body.idCategory;
 
-            let sql = `INSERT INTO commentaires SET id_auteur = '${idAuthor}',NOW(),contenu_commentaires = '${contained}', id_sujet_forum = '${idSubject}'`;
-            con.query(sql, (err, result) => {
+            if(!req.body.idAuthor || req.body.idAuthor == "" ) throw "author id is required"
+            if(!req.body.contained || req.body.contained == "") throw "contained is required"
+            if(!req.body.idSubject || req.body.idSubject == "") throw "subject id is required"
+
+            let todayDate = new Date().toISOString().slice(0,10);
+            let object = {
+                id_auteur: req.body.idAuthor,
+                date_commentaires: todayDate,
+                contenu_commentaires: req.body.contained,
+                id_sujet_forum: req.body.idSubject
+            }
+
+            con.query(`INSERT INTO commentaires SET ?`,object, (err, result) => {
                 if (err) throw err;
                 res.status(200).send("New commentary added")
             })
 
         } catch (error) {
-            res.status(203).send(error)
+            res.status(403).send(error)
         }
     });
 
     // DELETE A COMMENTARY
-    await router.delete("/subject/:id/:idCommentary", (req, res) => {
+    await router.delete("/subject/:id_auteur/:idCommentary", (req, res) => {
         try {
-            let id = req.params.id;
-            let idCommentary = req.params.idCommentary;
-            let sql = `DELETE FROM commentaires WHERE commentaires.id_auteur = '${id}' AND id = '${idCommentary}'`;
+            if(!req.params.id_auteur ||req.params.id_auteur == "") throw "id_author is required"
+            if(!req.params.idCommentary ||req.params.idCommentary == "") throw "idCommentary is required"
+            let object = {
+                id_auteur: req.params.id_auteur
+            }
+            let objectTwo = {
+                id: req.params.idCommentary
+            }
 
-            con.query(sql, (err, result) => {
+            con.query(`DELETE FROM commentaires WHERE ? AND ?`,[object,objectTwo], (err, result) => {
                 if (err) throw err;
-                if (result.length) {
+                if (result.affectedRows == 1) {
                     res.status(200).send("USER COMMENTARY DELETED");
                 } else {
-                    res.status(200).send("THIS COMMENTARY DOES NOT EXIST")
+                    res.status(403).send("THIS COMMENTARY DOES NOT EXIST")
                 }
 
             });
         } catch (error) {
-            res.status(203).send(error)
+            res.status(403).send(error)
         }
     });
 

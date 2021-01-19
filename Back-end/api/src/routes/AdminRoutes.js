@@ -8,25 +8,29 @@ const adminRoutes = async function (router, con) {
     //CREATE CATEGORY SUBJECT
     await router.post("/subject/category", verif_token, (req, res) => {
         try {
-            if (!req.body.idAdmin) throw "please provide idAdmin"
+            if (!req.body.idAdmin || req.body.idAdmin == "") throw "please provide idAdmin"
             if (!req.body.nom || req.body.nom == "") throw "please provide a nom"
-            let id = req.body.idAdmin;
-            let checkAdmin = `SELECT id,administ FROM utilisateurs WHERE id = '${id}';`;
-            con.query(checkAdmin, (err, result) => {
+            let object = {
+                id: req.body.idAdmin
+            }
+            con.query(`SELECT id,administ FROM utilisateurs WHERE ?;`,object , (err, result) => {
                 if (err) throw err;
                 else if (result[0].administ == 1) {
-                    let sql = `INSERT INTO catégories_sujet SET nom ='${req.body.nom}'`;
+                    
+                    let objectName = {
+                        nom: req.body.nom
+                    }
 
-                    con.query(sql, (err, results) => {
+                    con.query(`INSERT INTO catégories_sujet SET ?`,objectName, (err, results) => {
                         if (err) throw err;
                         res.status(200).send("New category added")
                     })
                 } else {
-                    res.status(200).send("Ur not an admin user")
+                    res.status(403).send("Ur not an admin user")
                 }
             })
         } catch (error) {
-            res.status(203).send(error)
+            res.status(403).send(error)
         }
     });
 }
