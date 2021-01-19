@@ -41,16 +41,28 @@
      
      min-height: 100vh;
      background-size: 50% auto;
-     position: relative;
+     /* position: relative;
         top: 1%;
-        left: -1%;
+        left: -1%; */
 }
+/* 
 .shivaImg{
     
   width: 600px;
   height: auto;
-  /* position: relative;
+  position: relative;
     top: -55%;
-    left: -20%; */
+    left: -20%;
 
+} */
+
+.ifritDiv{
+    background: url(../../Img//ForumImg//ff7ifrit.png) no-repeat;
+    min-height: 50vh;
+    background-size: 40% auto;
+    /* z-index: 1; */
+    overflow: visible;
+    padding-bottom: 30%;
+    margin-left: 0px;
+    background-position: right -35% bottom -0%;
 }

@@ -34,7 +34,8 @@ function Forum(props) {
         <div className="forumDiv">
             < Header />
             <div className="shivaDiv">
-                <div className="forum">
+                {/* <div className="ifritDiv"> </div> */}
+                <div className="forum ifritDiv">
                     <p className="forumMsg">BIENVENUE DANS LA SECTION FORUM DE NOTRE SITE < br /> RETROUVEZ TOUS LES SUJETS DE NOS MEMBRES</p>
                     <button className="btnBlue" > NOUVEAU SUJET </button>
                     <p className="forumMsg">TOUS LES SUJETS</p>
@@ -42,6 +43,14 @@ function Forum(props) {
                     {/* <img src={ff7cloudprofile} className='cloudImg' alt='Logo meteor from ff7' /> */}
                 </div>
                 {/* <img src={ff7Shiva} className='shivaImg' alt='invocation Shiva' /> */}
+            </div>
+            <div>
+                <p></p>
+                {/* <div className="subject">
+                    <ul className="subjectList">
+                        <li></li>
+                    </ul>
+                </div> */}
             </div>
 
             < Footer />
