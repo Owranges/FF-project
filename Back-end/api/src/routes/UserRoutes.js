@@ -89,6 +89,7 @@ const userRoutes = async function (router, con) {
                             id: result[0].id,
                             email: result[0].email,
                             password: result[0].password,
+                            admin: result[0].administ
                         },
                         config.secret
                     );

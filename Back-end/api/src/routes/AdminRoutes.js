@@ -6,7 +6,7 @@ const config = require("../modules/config")
 
 const adminRoutes = async function (router, con) {
     //CREATE CATEGORY SUBJECT
-    await router.post("/subject/category", verif_token, (req, res) => {
+    await router.post("/subject/category", (req, res) => {
         try {
             if (!req.body.idAdmin || req.body.idAdmin == "") throw "please provide idAdmin"
             if (!req.body.nom || req.body.nom == "") throw "please provide a nom"

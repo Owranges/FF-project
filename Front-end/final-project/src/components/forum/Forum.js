@@ -5,29 +5,44 @@ import Header from "../../Global/header/Header"
 import Footer from "../../Global/footer/Footer"
 import { connect } from "react-redux";
 import { signinAction } from "../../storeRedux/actions/SigninActions";
-import ff7Shiva from "../../Img/ForumImg/ff7shivascreenshot.png"
+import {forumSubjectAction} from "../../storeRedux/actions/ForumSubjectActions";
+
 
 function Forum(props) {
 
+    const [forumSubject, setForumSubject] = useState()
+    const [incorrect, setIncorrect] = useState()
+    // const token = props.signinStore.userToken;
+    // const [infoUser, setInfoUser] = useState([])
+    // const addSubject = () => {
+    //     axios.post(`http://localhost:8000/subject/create`)
+    // }
+    const getSubject = () => {
+        axios.get(`http://localhost:8000/subject`)
+        .then(response => {
+            console.log(response);
+            if (response.data) {
+                setForumSubject(response.data)
+                setIncorrect(true)
+                props.forumSubjectAction({ forumSubject : response.data });
+            }
+        }).catch(err => {
+            console.log(err)
+            if (err.response.status == 403) {
+                console.log('im in the catch');
+                setIncorrect(false)
+            };
+        })
+    };
+    
+    useEffect(() => {
+        getSubject()
+       console.log("camille");
+    }, []);
 
-    const token = props.signinStore.userToken;
-    // useEffect(() => {
-
-    //     if (token) axios.get(`http://localhost:8000/user/${props.signinStore.userInfo.id}`)
-    //         .then(response => {
-    //             if (response.data === "This user Id doesn't exist") {
-    //                 setIncorrect(false)
-    //             }
-    //             else if (response.data) {
-    //                 setInfoUser(response.data[0])
-    //             }
-    //         }).catch(err => {
-    //             console.log(err);
-    //         })
-    //     else {
-    //         props.history.push('/')
-    //     }
-    // }, []);
+    const newSubject = () => {
+        props.history.push('/forumSubject')
+    }
 
 
     return (
@@ -37,7 +52,7 @@ function Forum(props) {
                 {/* <div className="ifritDiv"> </div> */}
                 <div className="forum ifritDiv">
                     <p className="forumMsg">BIENVENUE DANS LA SECTION FORUM DE NOTRE SITE < br /> RETROUVEZ TOUS LES SUJETS DE NOS MEMBRES</p>
-                    <button className="btnBlue" > NOUVEAU SUJET </button>
+                    <button className="btnBlue" onClick={newSubject} > NOUVEAU SUJET </button>
                     <p className="forumMsg">TOUS LES SUJETS</p>
 
                     {/* <img src={ff7cloudprofile} className='cloudImg' alt='Logo meteor from ff7' /> */}
@@ -58,7 +73,8 @@ function Forum(props) {
     );
 }
 
-const mapDispatchToProps = { signinAction };
+
+const mapDispatchToProps = { signinAction, forumSubjectAction };
 const mapStateToProps = (state) => ({
     signinStore: state.signin,
 });

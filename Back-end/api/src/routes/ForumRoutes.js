@@ -5,12 +5,27 @@ const verif_token = require("../middleware/token");
 const config = require("../modules/config")
 
 const forumRoutes = async function (router, con) {
-
+    // GET ALL SUBJECT 
+    await router.get("/subject", (req,res) => {
+        try {
+            con.query('SELECT * FROM sujet_forum', (err, result) => {
+                if (err) throw err;
+                if (!result.length) {
+                    res.status(200).send("There is no subject yet") 
+                } else {
+                    res.status(200).send(result)
+                }
+            })
+        } catch (error) {
+            res.status(403).send(error)
+        }
+    })
     // CREATE SUBJECT
-    await router.post("/subject/create",verif_token, (req, res) => {
+    await router.post("/subject/create", (req, res) => {
         try {
             if(!req.body.id_utilisateur || req.body.id_utilisateur == "" ) throw "id_utilisateur id is required"
             if(!req.body.contained || req.body.contained == "") throw "contained is required"
+            if(!req.body.title_subject || req.body.title_subject == "") throw "title is required"
             if(!req.body.idCategorySubject || req.body.idCategorySubject == "") throw "subject category id is required"
 
             let todayDate = new Date().toISOString().slice(0,10);
@@ -19,6 +34,7 @@ const forumRoutes = async function (router, con) {
                 id_utilisateur: req.body.id_utilisateur,
                 date: todayDate,
                 contenu: req.body.contained,
+                title_subject: req.body.title_subject,
                 id_catégories_sujet: req.body.idCategorySubject
             }
 
@@ -27,7 +43,7 @@ const forumRoutes = async function (router, con) {
                 res.status(200).send("Subject well inserted");
             });
         } catch (error) {
-            res.status(203).send(error)
+            res.status(403).send(error)
         }
     });
 

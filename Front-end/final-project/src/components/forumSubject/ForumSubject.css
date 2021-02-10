@@ -1,0 +1,68 @@
+.forumSubjectDiv{
+    background-color: #143750 ;
+}
+.forumSubject{
+    
+    /* background: url(../../Img/forumSubjectImg/ff7shiva.jpg) repeat no-repeat;
+    background-repeat: no-repeat; */
+    
+    height: 40%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    
+}
+.btnBlue{
+    background-color: #197481;
+    color: white;
+    border: none;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    padding: 5px;
+    
+  }
+.forumSubjectMsg{
+    justify-content: center;
+    color:#B3D3E9;
+    margin-top: 10%;
+    
+}
+
+.forumSubject button{
+    display: flex ;
+  
+}
+
+.shivaDiv{
+    
+     background: url(../../Img/ForumImg/ff7shiva.jpg)  no-repeat;
+     
+     min-height: 100vh;
+     background-size: 50% auto;
+     /* position: relative;
+        top: 1%;
+        left: -1%; */
+}
+/* 
+.shivaImg{
+    
+  width: 600px;
+  height: auto;
+  position: relative;
+    top: -55%;
+    left: -20%;
+
+} */
+
+.ifritDiv{
+    background: url(../../Img//ForumImg//ff7ifrit.png) no-repeat;
+    min-height: 50vh;
+    background-size: 40% auto;
+    /* z-index: 1; */
+    overflow: visible;
+    padding-bottom: 30%;
+    margin-left: 0px;
+    background-position: right -35% bottom -0%;
+}

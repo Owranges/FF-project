@@ -34,6 +34,7 @@ function createTableSubjetForum() {
         FOREIGN KEY (id_utilisateur) REFERENCES utilisateurs(id),
         date DATE NOT NULL,
         contenu TEXT(1000),
+        title_subject VARCHAR(50),
         id_catégories_sujet INT NOT NULL,
         FOREIGN KEY (id_catégories_sujet) REFERENCES catégories_sujet(id)
     )`;

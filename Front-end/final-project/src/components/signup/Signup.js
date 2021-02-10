@@ -31,7 +31,7 @@ function Signup(props) {
                 }
             }).catch(err => {
                 console.log(err)
-                if (err.response.status == 403) {
+                if (err.response.status === 403) {
                     setIncorrect(false)
                 };
             })
