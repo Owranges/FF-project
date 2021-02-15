@@ -48,7 +48,7 @@ ReactDOM.render(
           <Route path="/edit-profile" component={EditProfile} />
           <Route path="/forum" component={Forum} />
           <Route path="/forumSubject" component={ForumSubject} />
-          <ProtectedRoutes path="/edit-profile" component={EditProfile} />
+          {/* <ProtectedRoutes path="" component={ } /> */}
           <Route path='*' exact={true} component={App} />
           {/* <Route path="/profiluser" component={ProfilUser} />
           <Route path="/edit-product" component={EditProduct} />

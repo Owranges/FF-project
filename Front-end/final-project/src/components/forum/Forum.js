@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios"
 import "./Forum.css"
-import Header from "../../Global/header/Header"
-import Footer from "../../Global/footer/Footer"
+// import Header from "../../Global/header/Header"
+import HeaderForum from "../../Global/headerForum/HeaderForum"
+import FooterForum from "../../Global/footerForum/FooterForum"
 import { connect } from "react-redux";
 import { signinAction } from "../../storeRedux/actions/SigninActions";
 import { forumSubjectAction } from "../../storeRedux/actions/ForumSubjectActions";
@@ -37,6 +38,7 @@ function Forum(props) {
 
     useEffect(() => {
         getSubject()
+
     }, []);
 
     const newSubject = () => {
@@ -46,7 +48,7 @@ function Forum(props) {
 
     return (
         <div className="forumDiv">
-            < Header />
+            < HeaderForum />
             <div className="shivaDiv">
                 {/* <div className="ifritDiv"> </div> */}
                 <div className="forum ifritDiv">
@@ -67,7 +69,7 @@ function Forum(props) {
                 </div> */}
             </div>
 
-            < Footer />
+            < FooterForum />
         </div >
     );
 }

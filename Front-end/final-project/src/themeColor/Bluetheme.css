@@ -14,9 +14,9 @@
     height: auto;
   
 }
-.siteTitle{
+.siteTitle-blue{
     display: flex;
-    color: #5BFFB5;
+    color: #BECDD1;
     font-size: 2rem;
     font-family: 'finalf';
     align-items: center;
@@ -24,46 +24,39 @@
     position: relative;
     width: auto;
 }
-.footer{
+.footer-blue{
     /* display: flex; */
     min-height: auto;
     height: 35px;
     flex-direction: row;
     justify-content: space-around;
-    background-color: #1b2625;
-    color: #5BFFB5;
+    background-color: #0C1F2C;
+    color: #BECDD1;
     font-size: 0.6em;
     
 }
-.header {
-    background-color: #1b2625;
+.header-blue {
+    background-color: #0C1F2C;
     height: 20%;
 }
-.nav{
+.nav-blue{
     display: flex;
     height: inherit;
     justify-content: space-around;
     align-items: center;
 }
-.nav a:link {
-    color: #5BFFB5;
+.nav-blue a:link {
+    color: #BECDD1;
     text-decoration: none;
 }
-.nav a:visited {
-    color: #5BFFB5;
+.nav-blue a:visited {
+    color: #BECDD1;
 }
 
 /* BUTTON */
-.btnGreen{
-    background-color: #057543 ;
-    width: 100px;
-    height: 25px;
-    color: white;
-    border: none;
-    
-  }
-.signout_btn{
-    background-color: #057543 ;
+
+.signout_btn-blue{
+    background-color: #197481 ;
     color: white;
     border: none;
     padding: 0.2%;

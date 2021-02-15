@@ -2,7 +2,7 @@ import React from "react";
 import "../../themeColor/Greentheme.css"
 import fflogo from '../../Img/HeaderImg/FFVIILogo.png';
 
-import { BrowserRouter as Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import { signoutAction } from "../../storeRedux/actions/SignoutActions";

@@ -1,19 +1,19 @@
 import React, { useState } from "react";
-import "../../themeColor/Greentheme.css"
+import "../../themeColor/Bluetheme.css"
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-function Footer() {
+function FooterForum() {
     // THINK TO TOKEN Footer + FORUM Footer
     const [activeTheme, setActiveTheme] = useState(false)
     const theDate = new Date()
     const dateCopy = `${theDate.getFullYear()} Copyright: Brunet Frank-Owen`
 
-    const changeTheme = () => {
-        setActiveTheme(!activeTheme)
-    }
+    // const changeTheme = () => {
+    //     setActiveTheme(!activeTheme)
+    // }
     return (
-        <footer className="footer">
-            <nav className="nav">
+        <footer className="footer-blue">
+            <nav className="nav-blue">
                 <Link className="nav_link_footer" to="/site-map">PLAN DU SITE</Link>
                 <Link className="nav_link_footer" to="/mentions-legales">MENTIONS LEGALES</Link>
                 <Link className="nav_link_footer" to="/cgu">CONDITIONS GENERAL / CGU</Link>
@@ -24,4 +24,4 @@ function Footer() {
     );
 }
 
-export default Footer;
+export default FooterForum;
