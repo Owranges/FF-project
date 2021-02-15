@@ -5,7 +5,7 @@ import Header from "../../Global/header/Header"
 import Footer from "../../Global/footer/Footer"
 import { connect } from "react-redux";
 import { signinAction } from "../../storeRedux/actions/SigninActions";
-import {forumSubjectAction} from "../../storeRedux/actions/ForumSubjectActions";
+import { forumSubjectAction } from "../../storeRedux/actions/ForumSubjectActions";
 
 
 function Forum(props) {
@@ -19,25 +19,24 @@ function Forum(props) {
     // }
     const getSubject = () => {
         axios.get(`http://localhost:8000/subject`)
-        .then(response => {
-            console.log(response);
-            if (response.data) {
-                setForumSubject(response.data)
-                setIncorrect(true)
-                props.forumSubjectAction({ forumSubject : response.data });
-            }
-        }).catch(err => {
-            console.log(err)
-            if (err.response.status == 403) {
-                console.log('im in the catch');
-                setIncorrect(false)
-            };
-        })
+            .then(response => {
+                console.log(response);
+                if (response.data) {
+                    setForumSubject(response.data)
+                    setIncorrect(true)
+                    props.forumSubjectAction({ forumSubject: response.data });
+                }
+            }).catch(err => {
+                console.log(err)
+                if (err.response.status === 403) {
+                    console.log('im in the catch');
+                    setIncorrect(false)
+                };
+            })
     };
-    
+
     useEffect(() => {
         getSubject()
-       console.log("camille");
     }, []);
 
     const newSubject = () => {

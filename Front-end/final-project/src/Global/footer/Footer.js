@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../../themeColor/Greentheme.css"
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Link } from "react-router-dom";
 
 function Footer() {
     // THINK TO TOKEN Footer + FORUM Footer

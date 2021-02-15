@@ -28,7 +28,7 @@ function EditProfile(props) {
                 }
             }).catch(err => {
                 console.log(err)
-                if (err.response.status == 403) {
+                if (err.response.status === 403) {
                     console.log('im in the catch');
                     setIncorrect(false)
                 };
@@ -60,11 +60,11 @@ function EditProfile(props) {
         axios.put(`http://localhost:8000/user/edit`, formValues, { headers: headers })
             .then(response => {
                 if (response) {
-                
+
                 }
             }).catch(err => {
                 console.log(err)
-                if (err.response.status == 403) {
+                if (err.response.status === 403) {
                     setIncorrect(false)
                 };
             })
