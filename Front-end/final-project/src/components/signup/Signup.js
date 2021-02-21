@@ -25,12 +25,10 @@ function Signup(props) {
         }
         axios.post("http://localhost:8000/user/sign-up", formValues)
             .then(response => {
-                console.log(response);
                 if (response.data) {
                     props.history.push("/sign-in");
                 }
             }).catch(err => {
-                console.log(err)
                 if (err.response.status === 403) {
                     setIncorrect(false)
                 };
@@ -74,6 +72,8 @@ function Signup(props) {
                         <button className="btnGreen" onClick={formSubmit}>INSCRIPTION</button>
                     </div>
                 </form>
+
+                {incorrect ? <p>Cette email ou pseudo est déjà utilisé</p> : null}
             </div>
             < Footer />
         </div >

@@ -30,8 +30,8 @@ function createTableUser() {
 function createTableSubjetForum() {
     const myTable = `CREATE TABLE IF NOT EXISTS sujet_forum(
         id INT PRIMARY KEY AUTO_INCREMENT,
-        id_utilisateur INT NOT NULL,
-        FOREIGN KEY (id_utilisateur) REFERENCES utilisateurs(id),
+        pseudo_utilisateur VARCHAR(50),
+        FOREIGN KEY (pseudo_utilisateur) REFERENCES utilisateurs(pseudo),
         date DATE NOT NULL,
         contenu TEXT(1000),
         title_subject VARCHAR(50),

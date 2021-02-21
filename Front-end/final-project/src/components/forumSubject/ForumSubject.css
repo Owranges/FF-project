@@ -2,18 +2,24 @@
     background-color: #143750 ;
 }
 .forumSubject{
-    
-    /* background: url(../../Img/forumSubjectImg/ff7shiva.jpg) repeat no-repeat;
-    background-repeat: no-repeat; */
-    
     height: 40%;
     width: 100%;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
     align-items: center;
-    
 }
+
+
+.forumSubjectMsg{
+    justify-content: center;
+    color:#B3D3E9;
+    margin-top: 10%;
+}
+
+.forumSubject button{
+    display: flex ;
+}
+/*BUTTON*/
 .btnBlue{
     background-color: #197481;
     color: white;
@@ -21,48 +27,46 @@
     margin-top: 50px;
     margin-bottom: 20px;
     padding: 5px;
-    
   }
-.forumSubjectMsg{
-    justify-content: center;
-    color:#B3D3E9;
-    margin-top: 10%;
-    
-}
-
-.forumSubject button{
-    display: flex ;
-  
-}
-
+  .btnRed{
+    background-color: #752626;
+    color: white;
+    border: none;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    padding: 5px;
+  }
+/*IMAGE SHIVE IFRIT */
 .shivaDiv{
-    
-     background: url(../../Img/ForumImg/ff7shiva.jpg)  no-repeat;
-     
+     background: url(../../Img/ForumImg/ff7shiva50.png)  no-repeat ;
      min-height: 100vh;
      background-size: 50% auto;
-     /* position: relative;
-        top: 1%;
-        left: -1%; */
 }
-/* 
-.shivaImg{
-    
-  width: 600px;
-  height: auto;
-  position: relative;
-    top: -55%;
-    left: -20%;
-
-} */
 
 .ifritDiv{
-    background: url(../../Img//ForumImg//ff7ifrit.png) no-repeat;
+    background: url(../../Img//ForumImg//ff7ifrit50.png) no-repeat;
     min-height: 50vh;
     background-size: 40% auto;
-    /* z-index: 1; */
     overflow: visible;
     padding-bottom: 30%;
     margin-left: 0px;
     background-position: right -35% bottom -0%;
+}
+/* DIV AND FORM ADD SUBJECT */
+
+.label-title{
+    text-decoration: bold;
+}
+#title_subject{
+    width: 50%;
+}
+.addSubject{
+    margin-top: 3%;
+    color: #B3D3E9;
+    width: 80%;
+}
+
+#subject_created{
+    font-size: 1.5em;
+    color: #B3D3E9;
 }

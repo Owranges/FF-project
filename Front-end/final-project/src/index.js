@@ -11,6 +11,7 @@ import EditProfile from './components/editProfile/EditProfile'
 import Forum from './components/forum/Forum'
 import ForumSubject from './components/forumSubject/ForumSubject'
 import ProtectedRoutes from './Global/protectedRoutes/ProtectedRoutes'
+import SingleSubject from './components/singleSubject/SingleSubject'
 // STORE + PERSISTANT
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
@@ -48,8 +49,9 @@ ReactDOM.render(
           <Route path="/edit-profile" component={EditProfile} />
           <Route path="/forum" component={Forum} />
           <Route path="/forumSubject" component={ForumSubject} />
+          <Route path="/forum-subject" component={SingleSubject} />
           {/* <ProtectedRoutes path="" component={ } /> */}
-          <Route path='*' exact={true} component={App} />
+          {/* <Route path='*' exact={true} component={App} /> */}
           {/* <Route path="/profiluser" component={ProfilUser} />
           <Route path="/edit-product" component={EditProduct} />
           <Route path="/cart" component={Cart} /> */}

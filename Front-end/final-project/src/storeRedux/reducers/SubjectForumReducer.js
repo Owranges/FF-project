@@ -1,30 +1,38 @@
 const initialStates = {
-    forumSubject : []
-    // In usertoken , there is token More Id email etc... of user
+    forumSubject: [
+        // {
+        //     id:
+        //     date:
+        //     contained:
+        //     title_subject:
+        //     pseudo_utilisateur:
+        //     idCategorySubject:
+        // }
+    ]
+
 };
 
 const forumSubjectReducer = (state = initialStates, action) => {
-    console.log(action.payload);
+    console.log(state.forumSubject);
     switch (action.type) {
         case "GETSUBJECT":
             return {
                 ...state,
-                forumSubject : [
-                    ...state.forumSubject
-                ]
-                
+                forumSubject: action.payload
+
             };
         case "NEWSUBJECT":
-            return{
+            return {
                 ...state,
-                forumSubject : [
+                forumSubject: [
                     ...state.forumSubject,
                     {
-                    date: action.payload.date,
-                    contained : action.payload.contained,
-                    title_subject:  action.payload.title_subject,
-                    id_utilisateur: action.payload.id_utilisateur,
-                    idCategorySubject: action.payload.admin
+                        id: action.payload.id,
+                        date: action.payload.date,
+                        contained: action.payload.contained,
+                        title_subject: action.payload.title_subject,
+                        pseudo_utilisateur: action.payload.pseudo_utilisateur,
+                        idCategorySubject: action.payload.admin
 
                     }
                 ]

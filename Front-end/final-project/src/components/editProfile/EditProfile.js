@@ -52,7 +52,6 @@ function EditProfile(props) {
             avatar: avatar || infoUser.avatar,
             id: infoUser.id
         }
-        console.log(formValues);
         const headers = {
             "Content-Type": "application/json",
             authorization: props.signinStore.userToken,
@@ -63,7 +62,6 @@ function EditProfile(props) {
 
                 }
             }).catch(err => {
-                console.log(err)
                 if (err.response.status === 403) {
                     setIncorrect(false)
                 };

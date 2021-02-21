@@ -10,9 +10,9 @@ const userRoutes = async function (router, con) {
     // GET USER INFO 
     await router.get("/user/:id", (req, res) => {
         try {
-            if(!req.params.id || req.params.id == "") throw "id is required"
+            if (!req.params.id || req.params.id == "") throw "id is required"
             let object = {
-                id : req.params.id
+                id: req.params.id
             }
             con.query(`SELECT * FROM utilisateurs WHERE ? `, object, (err, result) => {
                 if (err) throw err
@@ -30,36 +30,43 @@ const userRoutes = async function (router, con) {
     // ADD AN USER SIGNUP
     await router.post("/user/sign-up", (req, res) => {
         try {
-            if(!req.body.email || req.body.email == "") throw "email is required"
-            if(!req.body.prenom || req.body.prenom == "") throw "prenom is required"
-            if(!req.body.pseudo || req.body.pseudo == "") throw "pseudo is required"
-            if(!req.body.password || req.body.password == "") throw "password is required"
-            if(!req.body.avatar || req.body.avatar == "") throw "avatar is required"
+            if (!req.body.email || req.body.email == "") throw "email is required"
+            if (!req.body.prenom || req.body.prenom == "") throw "prenom is required"
+            if (!req.body.pseudo || req.body.pseudo == "") throw "pseudo is required"
+            if (!req.body.password || req.body.password == "") throw "password is required"
+            if (!req.body.avatar || req.body.avatar == "") throw "avatar is required"
 
             let objectEmail = {
-                email : req.body.email
+                email: req.body.email
             }
-            con.query(`SELECT email FROM utilisateurs WHERE ?`,objectEmail, (err, result) => {
+            con.query(`SELECT email FROM utilisateurs WHERE ?`, objectEmail, (err, result) => {
                 if (err) throw err;
                 if (result.length) {
                     res.status(403).send("This email is already in use");
                 } else {
-                    bcrypt.hash(req.body.password, saltRounds).then((hashPassword) => {
+                    con.query(`SELECT pseudo FROM utilisateurs WHERE ?`, objectPseudo, (err, result) => {
+                        if (err) throw err;
+                        if (result.length) {
+                            res.status(403).send("This pseudo is already in use");
+                        } else {
+                            bcrypt.hash(req.body.password, saltRounds).then((hashPassword) => {
 
-                        let object = {
-                            email: req.body.email,
-                            prenom: req.body.prenom,
-                            pseudo: req.body.pseudo,
-                            password: hashPassword,
-                            avatar: req.body.avatar,
-                            administ: 0
+                                let object = {
+                                    email: req.body.email,
+                                    prenom: req.body.prenom,
+                                    pseudo: req.body.pseudo,
+                                    password: hashPassword,
+                                    avatar: req.body.avatar,
+                                    administ: 0
+                                }
+
+                                con.query(`INSERT INTO utilisateurs SET ?`, object, (err, result) => {
+                                    if (err) throw err;
+                                    res.status(200).send("users well inserted");
+                                });
+                            });
                         }
-
-                        con.query(`INSERT INTO utilisateurs SET ?`, object, (err, result) => {
-                            if (err) throw err;
-                            res.status(200).send("users well inserted");
-                        });
-                    });
+                    })
                 }
             });
         }
@@ -73,11 +80,11 @@ const userRoutes = async function (router, con) {
         try {
             if (!req.body.password || req.body.password === "") throw "Password is required"
             if (!req.body.email || req.body.email === "") throw "Email is required"
-            
+
             let objectEmail = {
-                email : req.body.email 
+                email: req.body.email
             }
-            
+
             con.query(`SELECT * FROM utilisateurs WHERE ?`, objectEmail, (err, result) => {
                 if (err) throw err;
 
@@ -89,7 +96,8 @@ const userRoutes = async function (router, con) {
                             id: result[0].id,
                             email: result[0].email,
                             password: result[0].password,
-                            admin: result[0].administ
+                            admin: result[0].administ,
+                            pseudo: result[0].pseudo
                         },
                         config.secret
                     );
@@ -120,7 +128,7 @@ const userRoutes = async function (router, con) {
             let objectId = {
                 id: req.body.id
             }
-            con.query(`SELECT id FROM utilisateurs WHERE ?`,objectId, (err, result) => {
+            con.query(`SELECT id FROM utilisateurs WHERE ?`, objectId, (err, result) => {
                 if (err) throw err;
                 if (!result.length) {
                     throw "This profil doesn't exist"
@@ -134,7 +142,7 @@ const userRoutes = async function (router, con) {
                             password: hashPassword,
                             avatar: req.body.avatar,
                         }
-                        con.query(`UPDATE utilisateurs SET ? WHERE ?`,[object,objectId], (err, result) => {
+                        con.query(`UPDATE utilisateurs SET ? WHERE ?`, [object, objectId], (err, result) => {
                             if (err) throw err;
                             else {
                                 res.status(201).send("ALL OK");
@@ -152,11 +160,11 @@ const userRoutes = async function (router, con) {
     // DELETE USER ACCOUNT
     await router.delete("/user/:id", verif_token, (req, res) => {
         try {
-            if(!req.params.id || req.params.id == "") throw "id is required"
+            if (!req.params.id || req.params.id == "") throw "id is required"
             let object = {
                 id: req.params.id
             }
-            con.query(`DELETE FROM utilisateurs WHERE ?`,object, (err, result) => {
+            con.query(`DELETE FROM utilisateurs WHERE ?`, object, (err, result) => {
                 if (err) throw err;
                 else {
                     res.status(200).send("USER ACCOUNT DELETED");

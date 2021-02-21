@@ -1,19 +1,15 @@
 .forumDiv{
     background-color: #143750 ;
 }
+
 .forum{
-    
-    /* background: url(../../Img/ForumImg/ff7shiva.jpg) repeat no-repeat;
-    background-repeat: no-repeat; */
-    
     height: 40%;
     width: 100%;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
     align-items: center;
-    
 }
+
 .btnBlue{
     background-color: #197481;
     color: white;
@@ -21,13 +17,13 @@
     margin-top: 50px;
     margin-bottom: 20px;
     padding: 5px;
-    
   }
+
 .forumMsg{
     justify-content: center;
+    text-align: center;
     color:#B3D3E9;
     margin-top: 10%;
-    
 }
 
 .forum button{
@@ -35,7 +31,9 @@
   
 }
 
-.shivaDiv{
+/* IMAGE SHIVA IFRIT */
+
+.shivaDivForum{
     
      background: url(../../Img/ForumImg/ff7shiva.jpg)  no-repeat;
      
@@ -45,18 +43,7 @@
         top: 1%;
         left: -1%; */
 }
-/* 
-.shivaImg{
-    
-  width: 600px;
-  height: auto;
-  position: relative;
-    top: -55%;
-    left: -20%;
-
-} */
-
-.ifritDiv{
+.ifritDivForum{
     background: url(../../Img//ForumImg//ff7ifrit.png) no-repeat;
     min-height: 50vh;
     background-size: 40% auto;
@@ -65,4 +52,61 @@
     padding-bottom: 30%;
     margin-left: 0px;
     background-position: right -35% bottom -0%;
+}
+
+
+/*TABLE SUBJECT */
+.table_div_nosubject{
+    width: 80%;
+    display: flex;
+    color : #60ACC5;
+}
+.table_div_subject{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color : #60ACC5;
+}
+
+
+/* H1 above table */
+.table_title{
+    color : #60ACC5;
+    text-align: center;
+    font-size: 1.5em;
+}
+/* Row of columns with names */
+#table_header{
+    text-align: center;
+  
+} 
+
+#table_date{
+    color: #EF942A
+}
+#table{
+    font-size: 1.2em;
+    text-align:center; 
+    margin-left:auto; 
+    margin-right:auto; 
+    width:80%;
+}
+
+tr{
+    background-color: #020f18cb;
+}
+th{
+    height: 50px;
+    font-weight: normal;
+}
+tr{
+    height: 35px;
+}
+
+tbody:before {
+    content:"@";
+    display:block;
+    line-height:30px;
+    text-indent:-99999px;
 }
