@@ -81,16 +81,27 @@
     text-align: center;
   
 } 
-
+#table_link{
+    text-decoration: underline;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-left: 10px;
+    
+    
+}
 #table_date{
     color: #EF942A
 }
 #table{
-    font-size: 1.2em;
+    font-size: 1em;
     text-align:center; 
     margin-left:auto; 
     margin-right:auto; 
-    width:80%;
+    width: 80%;
+    table-layout: fixed;
+
 }
 
 tr{

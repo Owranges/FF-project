@@ -60,15 +60,15 @@ function ForumSubject(props) {
                     <div className="addSubject">
                         <form onSubmit={handleSubmit} className="formAddSubject">
                             <div className="form-title_subject">
-                                <label className="label-title">CHOISISSEZ LE NOM DE VOTRE SUJET :</label>
+                                <label className="label-title">CHOISISSEZ LE TITRE DE VOTRE SUJET :</label>
                                 <br></br>
-                                <input type="text" name="title_subject" id="title_subject" placeholder="Choisissez le titre de votre sujet" required onChange={e => setContained(e.target.value)} />
+                                <input type="text" name="title_subject" id="title_subject" placeholder="Choisissez le titre de votre sujet" required onChange={e => setTitle_Subject(e.target.value)} />
                             </div>
                             <hr></hr>
                             <div className="form-contained">
                                 <label >Contenu:</label>
                                 <br></br>
-                                <input type="text" name="contained" id="contained" required onChange={e => setTitle_Subject(e.target.value)} />
+                                <input type="text" name="contained" id="contained" required onChange={e => setContained(e.target.value)} />
                             </div>
                         </form>
                         <hr></hr>

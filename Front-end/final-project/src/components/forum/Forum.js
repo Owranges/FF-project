@@ -57,9 +57,10 @@ function Forum(props) {
         if (forumSubject.length) {
             return forumSubject.map((subject, index) => {
                 const { id, title_subject, id_catégories_sujet, pseudo_utilisateur, date } = subject //destructuring
+                console.log(subject);
                 return (
                     <tr className="table_header" key={id}>
-                        <td onClick={() => clickedSubject(id)}>{title_subject}</td>
+                        <td onClick={() => clickedSubject(id)} id="table_link">{title_subject}</td>
                         <td>{id_catégories_sujet === 1 ? "administrateur" : "utilisateur"}</td>
                         <td>{pseudo_utilisateur}</td>
                         <td id="table_date">{handleDateFormat(date)}</td>
