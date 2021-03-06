@@ -1,63 +1,62 @@
-*{
-    margin: 0;
-    box-sizing: border-box;
-    padding: 0;
-}
-
 @font-face {
     font-family: 'finalf';
     src: url(../font/finalf.ttf) format("ttf");
 }
-/* NAVBARD + FOOTER */
-.logoImg{
-    max-width: 5%;
-    height: auto;
-  
-}
-.siteTitle-blue{
-    display: flex;
-    color: #BECDD1;
-    font-size: 2rem;
-    font-family: 'finalf';
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    width: auto;
-}
-.footer-blue{
-    /* display: flex; */
-    min-height: auto;
-    height: 35px;
-    flex-direction: row;
-    justify-content: space-around;
-    background-color: #0C1F2C;
-    color: #BECDD1;
-    font-size: 0.6em;
-    
-}
-.header-blue {
-    background-color: #0C1F2C;
-    height: 20%;
-}
-.nav-blue{
+/* NAVBAR */
+
+.nav_blue {
     display: flex;
     height: inherit;
     justify-content: space-around;
     align-items: center;
 }
-.nav-blue a:link {
+.nav_blue a:link {
     color: #BECDD1;
     text-decoration: none;
 }
-.nav-blue a:visited {
-    color: #BECDD1;
-}
+.nav_blue a:visited { color: #BECDD1; }
+.nav_blue a:hover   { color: orange; }
 
 /* BUTTON */
-
-.signout_btn-blue{
+.signout_btn-blue {
     background-color: #197481 ;
     color: white;
     border: none;
-    padding: 0.2%;
+    padding: 0.1%;
+}
+
+/* FOOTER */ 
+.footer_blue {
+    min-height: auto;
+    height: 35px;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: #0C1F2C;
+    font-size: 0.6em;
+}
+.footer_nav_blue {
+    display: flex;
+    height: inherit;
+    justify-content: space-around;
+    align-items: center;
+    color: #BECDD1;
+}
+.footer_nav_blue a { color: #BECDD1; }
+.nav_link_footer a:link {
+    color: #BECDD1;
+    text-decoration: none;
+}
+.nav_link_footer a:visited { color: #BECDD1; }
+
+.footer_forum_span         { color: #BECDD1; }
+
+@media screen and (max-width: 780px){
+    .site-title          { font-size: 1.4em; }
+
+    .nav_blue            { font-size: 1em; }
+    .nav_blue a:link     { font-size: 1em; }
+    .nav_blue a:visited  { font-size: 1em; }
+    
+    /* BUTTON */
+    .signout_btn-blue    { font-size: 1em; }
 }

@@ -13,12 +13,12 @@ function Footer() {
     }
     return (
         <footer className="footer">
-            <nav className="nav">
+            <nav className="footer_nav">
                 <Link className="nav_link_footer" to="/site-map">PLAN DU SITE</Link>
                 <Link className="nav_link_footer" to="/mentions-legales">MENTIONS LEGALES</Link>
                 <Link className="nav_link_footer" to="/cgu">CONDITIONS GENERAL / CGU</Link>
-                <Link className="nav_link_footer" to="/contact">Contact : frank.owen.brunet@gmail.com</Link>
-                <span>{dateCopy}</span>
+                <Link className="nav_link_footer" to="/contact">Contact : frank.owen@gmail.com</Link>
+                <span className="footer_span">{dateCopy}</span>
             </nav>
         </footer>
     );

@@ -10,9 +10,9 @@ const forumRoutes = async function (router, con) {
     await router.get("/subject/:id", (req, res) => {
         try {
             let object = {
-                id: req.params.id_subject
+                id: req.params.id
             }
-            con.query('SELECT * FROM sujet_from WHERE ?', object, (err, result) => {
+            con.query('SELECT *FROM sujet_forum WHERE ?', object, (err, result) => {
                 if (err) throw err;
                 if (!result.length) {
                     res.status(403).send("This subject doesn't exist")
@@ -27,7 +27,11 @@ const forumRoutes = async function (router, con) {
     // GET ALL SUBJECT 
     await router.get("/subject", (req, res) => {
         try {
-            con.query('SELECT * FROM sujet_forum', (err, result) => {
+            con.query(`SELECT sujet_forum.id, sujet_forum.date, sujet_forum.id_utilisateur, title_subject, utilisateurs.administ, utilisateurs.pseudo 
+            FROM sujet_forum 
+            INNER JOIN utilisateurs 
+            ON sujet_forum.id_utilisateur  = utilisateurs.id
+            WHERE sujet_forum.id_utilisateur = utilisateurs.id `, (err, result) => {
                 if (err) throw err;
                 if (!result.length) {
                     res.status(200).send("There is no subject yet")
@@ -40,18 +44,18 @@ const forumRoutes = async function (router, con) {
         }
     })
     // CREATE SUBJECT
-    await router.post("/subject/create", (req, res) => {
+    await router.post("/subject/create", verif_token, (req, res) => {
         try {
-            if (!req.body.pseudo_utilisateur || req.body.pseudo_utilisateur == "") throw "pseudo_utilisateur id is required"
+            if (!req.body.id || req.body.id == "") throw "id_utilisateur is required"
             if (!req.body.contained || req.body.contained == "") throw "contained is required"
             if (!req.body.title_subject || req.body.title_subject == "") throw "title is required"
             if (!req.body.idCategorySubject || req.body.idCategorySubject == "") throw "subject category id is required"
 
-            let todayDate = new Date().toISOString().slice(0, 10);
+
 
             let object = {
-                pseudo_utilisateur: req.body.pseudo_utilisateur,
-                date: todayDate,
+                id_utilisateur: req.body.id,
+                date: req.body.date,
                 contenu: req.body.contained,
                 title_subject: req.body.title_subject,
                 id_catégories_sujet: req.body.idCategorySubject
@@ -67,22 +71,22 @@ const forumRoutes = async function (router, con) {
     });
 
     // CREATE A COMMENTARY
-    await router.post("/subject/commentaries", (req, res) => {
+    await router.post("/subject/commentaries", verif_token, (req, res) => {
         try {
-
-            if (!req.body.idAuthor || req.body.idAuthor == "") throw "author id is required"
+            if (!req.body.id_auteur || req.body.id_auteur == "") throw "_auteur id is required"
             if (!req.body.contained || req.body.contained == "") throw "contained is required"
-            if (!req.body.idSubject || req.body.idSubject == "") throw "subject id is required"
+            if (!req.body.id_sujet_forum || req.body.id_sujet_forum == "") throw "subject id is required"
 
-            let todayDate = new Date().toISOString().slice(0, 10);
+
             let object = {
-                id_auteur: req.body.idAuthor,
-                date_commentaires: todayDate,
+                id_auteur: req.body.id_auteur,
+                date_commentaires: req.body.date_commentaires,
                 contenu_commentaires: req.body.contained,
-                id_sujet_forum: req.body.idSubject
+                id_sujet_forum: req.body.id_sujet_forum
             }
 
             con.query(`INSERT INTO commentaires SET ?`, object, (err, result) => {
+
                 if (err) throw err;
                 res.status(200).send("New commentary added")
             })
@@ -92,6 +96,26 @@ const forumRoutes = async function (router, con) {
         }
     });
 
+
+    // GET COMMENTARY OF A SUBJECT 
+
+    await router.get("/subject/:id/commentaries", (req, res) => {
+        try {
+            con.query(`SELECT commentaires.id,contenu_commentaires, date_commentaires, id_auteur, avatar, pseudo
+            FROM commentaires
+            INNER JOIN sujet_forum
+            ON commentaires.id_sujet_forum = sujet_forum.id
+            INNER JOIN utilisateurs
+            ON utilisateurs.id = id_auteur
+            WHERE commentaires.id_sujet_forum = ?
+            `, req.params.id, (err, result) => {
+                if (err) throw err;
+                res.status(200).send(result)
+            })
+        } catch (error) {
+            res.status(403).send(error)
+        }
+    });
     // DELETE A COMMENTARY
     await router.delete("/subject/:id_auteur/:idCommentary", (req, res) => {
         try {

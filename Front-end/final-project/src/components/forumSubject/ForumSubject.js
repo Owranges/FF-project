@@ -7,12 +7,14 @@ import { connect } from "react-redux";
 import { signinAction } from "../../storeRedux/actions/SigninActions";
 import { newSubjectAction } from "../../storeRedux/actions/NewSubject"
 
-
 function ForumSubject(props) {
     const todayDate = () => (
         new Date().toISOString().slice(0, 10)
     )
+
     const token = props.signinStore.userToken;
+    const [incorrect, setIncorrect] = useState(false)
+    const [createSubject, setCreateSubject] = useState(false)
     const [subjectCreated, setSubjectCreated] = useState(false)
     const [contained, setContained] = useState('')
     const [title_subject, setTitle_Subject] = useState('')
@@ -21,60 +23,81 @@ function ForumSubject(props) {
         e.preventDefault()
     }
     const addSubject = () => {
-        const formValues = {
-            contained: contained,
-            title_subject: title_subject,
-            pseudo_utilisateur: props.signinStore.userInfo.pseudo,
-            idCategorySubject: props.signinStore.userInfo.admin ? 1 : 2,
-            date: todayDate()
+        if (token) {
+            setCreateSubject(false)
+            const trimContained = contained.trim()
+            const trimTitle = title_subject.trim()
+            if (trimContained && trimTitle) {
+                const formValues = {
+                    id: props.signinStore.userInfo.id,
+                    contained: contained,
+                    title_subject: title_subject,
+                    pseudo_utilisateur: props.signinStore.userInfo.pseudo,
+                    idCategorySubject: props.signinStore.userInfo.admin ? 1 : 2,
+                    date: todayDate()
+                }
+                const headers = {
+                    "Content-Type": "application/json",
+                    authorization: props.signinStore.userToken,
+                };
+                axios.post("http://localhost:8000/subject/create", formValues, { headers: headers })
+                    .then(() => {
+                        props.newSubjectAction(formValues)
+                        setSubjectCreated(true)
+                        setIncorrect(false)
+                        setTimeout(() => {
+                            props.history.push("/forum")
+                        }, 4000);
+                    }).catch(err => {
+
+                        if (err.response.status === 403) {
+                            setIncorrect(true)
+                        }
+                    })
+            } else {
+                setIncorrect(true)
+            }
+
+        } else {
+            setCreateSubject(true)
         }
-        axios.post("http://localhost:8000/subject/create", formValues)
-            .then(() => {
-                props.newSubjectAction(formValues)
-                setSubjectCreated(true)
-                setTimeout(() => {
-                    props.history.push("/forum")
-                }, 4000);
-            }).catch(err => {
-                console.log(err)
-                // if (err.response.status === 403) {
-                //     setIncorrect(false)
-                // };
-            })
     }
+
     useEffect(() => {
 
         if (token) {
         }
         else {
-            props.history.push('/')
+            props.history.push('/forum')
         }
     }, []);
 
 
     return (
-        <div className="forumSubjectDiv">
+        <div className="page-container theme-blue">
             < HeaderForum />
-            <div className="shivaDiv">
-                <div className="forumSubject ifritDiv">
-                    <div className="addSubject">
-                        <form onSubmit={handleSubmit} className="formAddSubject">
-                            <div className="form-title_subject">
-                                <label className="label-title">CHOISISSEZ LE TITRE DE VOTRE SUJET :</label>
+            <div className="shiva">
+                <div className="forumSubject ifrit">
+                    <div className="mt-3 text-bluelight width-80">
+                        <form onSubmit={handleSubmit}>
+                            <div>
+                                <label>CHOISISSEZ LE TITRE DE VOTRE SUJET :</label>
                                 <br></br>
-                                <input type="text" name="title_subject" id="title_subject" placeholder="Choisissez le titre de votre sujet" required onChange={e => setTitle_Subject(e.target.value)} />
+                                <input type="text" name="title_subject" id="title_subject" placeholder="Titre de votre sujet" required onChange={e => setTitle_Subject(e.target.value)} />
                             </div>
-                            <hr></hr>
-                            <div className="form-contained">
-                                <label >Contenu:</label>
-                                <br></br>
-                                <input type="text" name="contained" id="contained" required onChange={e => setContained(e.target.value)} />
+                            <br></br>
+                            <div>
+                                <label >CONTENU:</label>
+                                <hr></hr>
+                                <textarea name="contained" id="contained" placeholder="Ecriver votre texte ici" required onChange={e => setContained(e.target.value)} />
                             </div>
                         </form>
                         <hr></hr>
-                        <button className="btnRed" onClick={addSubject} disabled={subjectCreated}> VALIDER VOTRE SUJET</button>
+                        <button className="btn btn-red " onClick={addSubject} disabled={subjectCreated}> VALIDER VOTRE SUJET</button>
                     </div>
-                    {subjectCreated ? <p id="subject_created">Votre sujet a bien été créé, vous allez être redirigé sur la page forum d'ici quelques secondes.</p> : null}
+                    {createSubject ? <p className="text-error width-80">Vous devez être connecté pour poster un sujet</p> : null}
+                    {incorrect ? <p className="text-error width-80">Vous devez mettre un titre et rédiger du contenu pour créer votre sujet</p> : null}
+                    {subjectCreated ? <p className="text-success width-80">Votre sujet a bien été créé, vous allez être redirigé sur la page forum d'ici quelques secondes.</p> : null}
                 </div>
             </div>
             < FooterForum />

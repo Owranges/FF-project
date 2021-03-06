@@ -13,7 +13,6 @@ const initialStates = {
 };
 
 const forumSubjectReducer = (state = initialStates, action) => {
-    console.log(state.forumSubject);
     switch (action.type) {
         case "GETSUBJECT":
             return {
@@ -28,6 +27,7 @@ const forumSubjectReducer = (state = initialStates, action) => {
                     ...state.forumSubject,
                     {
                         id: action.payload.id,
+                        id_utilisateur: action.payload.id_utilisateur,
                         date: action.payload.date,
                         contained: action.payload.contained,
                         title_subject: action.payload.title_subject,

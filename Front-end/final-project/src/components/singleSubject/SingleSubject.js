@@ -3,40 +3,145 @@ import axios from "axios"
 import "./SingleSubject.css"
 import HeaderForum from "../../Global/headerForum/HeaderForum"
 import FooterForum from "../../Global/footerForum/FooterForum"
-
+import CommentariesSubject from "../commentariesSubject/CommentariesSubject"
 import { connect } from "react-redux";
 import { signinAction } from "../../storeRedux/actions/SigninActions";
 import { forumSubjectAction } from "../../storeRedux/actions/ForumSubjectActions";
-
+import iconprofil from "../../Img/iconprofil.png"
 
 function SingleSubject(props) {
     const params = new URLSearchParams(props.location.search)
     const urlId = params.get('id')
-    console.log(params);
-    console.log(urlId);
 
-    console.log(props.forumSubject.forumSubject[0]);
-    console.log(props.signinStore);
+    const token = props.signinStore.userToken;
+
+    const [addComment, setAddComment] = useState(false);
+    const [incorrect, setIncorrect] = useState(false);
+    const [subjectInfo, setSubjectInfo] = useState(false);
+    const [ownerSubject, setOwnerSubject] = useState();
+    const [contained, setContained] = useState('');
+    const [userDeleted, setUserDeleted] = useState(false);
+
+    function defaultSrc(ev) {
+        ev.target.src = `${iconprofil}`
+    }
+    const todayDate = () => (
+        new Date().toISOString().slice(0, 10)
+    )
     const subject = () => {
-        console.log(props.forumSubject);
         let mySubject = props.forumSubject.forumSubject.find(
             (subj) => subj.id == urlId
         )
-        console.log(mySubject);
+        setSubjectInfo(mySubject);
     };
+    const getInfoOwnerSubject = () => {
+        axios.get(`http://localhost:8000/user/${subjectInfo.id_utilisateur}`)
+            .then(response => {
+
+                setOwnerSubject(response.data[0]);
+            }).catch((err) => {
+                if (err) {
+                    setUserDeleted("*****")
+                }
+
+            })
+    }
+
+    const addCommentary = () => {
+        if (token) {
+            const trimContained = contained.trim()
+
+            const objectCommentary = {
+                id_auteur: props.signinStore.userInfo.id,
+                contained: trimContained,
+                id_sujet_forum: urlId,
+                date_commentaires: todayDate()
+            }
+            const headers = {
+                "Content-Type": "application/json",
+                authorization: props.signinStore.userToken,
+
+            };
+            axios.post('http://localhost:8000/subject/commentaries', objectCommentary, { headers: headers })
+                .then(() => {
+                    setAddComment(true)
+                    setTimeout(() => {
+                        props.history.push("/forum")
+                    }, 4000);
+                }).catch(err => {
+                    if (err.response.status === 403) {
+
+                    }
+                })
+        } else {
+            setIncorrect(true)
+        }
+
+    }
+
+
+    function handleDateFormat(date) {
+        let currentDate = date;
+        var newDate = new Date(currentDate).toLocaleDateString("sq-AL", { year: 'numeric', month: '2-digit', day: '2-digit' });
+        return newDate;
+    }
+
+
 
     useEffect(() => {
         subject()
-
-    }, [urlId]);
-
-
+        if (subjectInfo) {
+            getInfoOwnerSubject()
+        }
+    }, [urlId, subjectInfo]);
     return (
-        <div id="div_single_subject">
+        <div className=" page-container theme-blue">
             < HeaderForum />
-            <div className="shivaDiv">
-                <div className="forum ifritDiv">
+            <div className="shiva">
+                <div className="forum ifrit">
+                    {ownerSubject ?
+                        <>
+                            <div className="py-5 width-80">
+                                <p>TITRE DU SUJET</p>
+                                <div className="subject-name-date">
+                                    <p>{subjectInfo.title_subject.toUpperCase()}</p>
+                                    <p className="text-orange">{handleDateFormat(subjectInfo.date)}</p>
+                                </div>
+                                <div>
+                                    <img className="img-avatar" src={ownerSubject.avatar} onError={defaultSrc} alt="avatar" />
+                                    <p>{ownerSubject.pseudo}</p>
+                                </div>
+                                <div>{subjectInfo.contenu}</div>
+                                <hr></hr>
+                                <p>COMMENTAIRES</p>
+                            </div>
+                            <CommentariesSubject idSubject={urlId} />
+                        </>
+                        : <><div className="subject_user">
+                            <div className="name_date">
+                                <h1 className="title_color">{subjectInfo ? subjectInfo.title_subject.toUpperCase() : null}</h1>
+                                <p className="date_color">{handleDateFormat(subjectInfo.date)}</p>
+                            </div>
+                            <div className="subject-pseudo-avatar">
+
+                                <p id="pl-1">{userDeleted}</p>
+                            </div>
+                            <div>{subjectInfo.contenu}</div>
+                        </div>
+                            <hr className="width-80"></hr>
+                            <CommentariesSubject idSubject={urlId} />
+                        </>}
+
+                    <div className="width-80">
+                        <p className="title_color">AJOUTER UN COMMENTAIRE</p>
+                        <textarea name="contained" id="contained" placeholder="Ecriver votre texte ici" required onChange={e => setContained(e.target.value)} />
+                        <button className="btn btn-red " onClick={addCommentary} disabled={addComment}> VALIDER VOTRE COMMENTAIRE</button>
+
+                        {addComment ? <p className="text-success"> Votre commentaire a bien été ajouté, vous allez être redirigé sur la page forum</p> : null}
+                        {incorrect ? <p className="text-error">Vous devez être connecté pour poster un commentaire</p> : null}
+                    </div>
                 </div>
+                        -
             </div>
             < FooterForum />
         </div >

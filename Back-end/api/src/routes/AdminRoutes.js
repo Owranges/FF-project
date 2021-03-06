@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const saltRounds = 10;
 const verif_token = require("../middleware/token");
-const config = require("../modules/config")
+const config = require("../modules/config");
 
 const adminRoutes = async function (router, con) {
     //CREATE CATEGORY SUBJECT
@@ -13,15 +13,15 @@ const adminRoutes = async function (router, con) {
             let object = {
                 id: req.body.idAdmin
             }
-            con.query(`SELECT id,administ FROM utilisateurs WHERE ?;`,object , (err, result) => {
+            con.query(`SELECT id,administ FROM utilisateurs WHERE ?;`, object, (err, result) => {
                 if (err) throw err;
                 else if (result[0].administ == 1) {
-                    
+
                     let objectName = {
                         nom: req.body.nom
                     }
 
-                    con.query(`INSERT INTO catégories_sujet SET ?`,objectName, (err, results) => {
+                    con.query(`INSERT INTO catégories_sujet SET ?`, objectName, (err, results) => {
                         if (err) throw err;
                         res.status(200).send("New category added")
                     })

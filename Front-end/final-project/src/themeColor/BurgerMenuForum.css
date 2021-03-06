@@ -1,0 +1,194 @@
+
+@media screen and (max-width: 700px){
+    .logo-img, .site-title, .nav_blue, .nav_blue a:link, .nav_blue a:visited,  footer{
+        display: none;
+    }
+    .header{
+        height: 35px;
+    }
+    .logo-img_burger{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 30%;
+        margin-bottom: 15px;
+    }
+    .title_burger_forum{
+        color: whitesmoke;
+        font-size: 1.2em;
+        margin-bottom: 10px;
+        text-align: center;
+        font-family: 'finalf';
+    }
+    /* BURGER MENU  */
+
+    #menuToggle_forum
+    {
+      display: block;
+      position: relative;
+      top: 5px; 
+      left: 0px;
+      z-index: 1;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    
+    #menuToggle_forum a
+    {
+      text-decoration: none;
+      color: #BECDD1;
+      transition: color 0.3s ease;
+    }
+    
+    #menuToggle_forum a:hover
+    {
+      color: orange;
+    }
+    
+    #menuToggle_forum input
+    {
+      display: block;
+      width: 40px;
+      height: 32px;
+      position: absolute;
+      top: -7px;
+      left: -5px;
+      cursor: pointer;
+      opacity: 0; /* hide this */
+      z-index: 2; /* and place it over the hamburger */
+      -webkit-touch-callout: none;
+    }
+    
+    /*
+     * Just a quick hamburger
+     */
+    #menuToggle_forum span
+    {
+      display: block;
+      width: 33px;
+      height: 4px;
+      margin-bottom: 5px;
+      position: relative;
+      background: #BECDD1;
+      border-radius: 3px;
+      z-index: 1;
+      transform-origin: 4px 0px;
+      transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+                  background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+                  opacity 0.55s ease;
+    }
+    
+    #menuToggle_forum span:first-child
+    {
+      transform-origin: 0% 0%;
+    }
+    
+    #menuToggle_forum span:nth-last-child(2)
+    {
+      transform-origin: 0% 100%;
+    }
+    
+    /* 
+     * Transform all the slices of hamburger
+     * into a crossmark.
+     */
+    #menuToggle_forum input:checked ~ span
+    {
+      opacity: 1;
+      transform: rotate(45deg) translate(-2px, -1px);
+      background: #BECDD1   ;
+    }
+    
+    /*
+     * But let's hide the middle one.
+     */
+    #menuToggle_forum input:checked ~ span:nth-last-child(3)
+    {
+      opacity: 0;
+      transform: rotate(0deg) scale(0.2, 0.2);
+    }
+    
+    /*
+     * Ohyeah and the last one should go the other direction
+     */
+    #menuToggle_forum input:checked ~ span:nth-last-child(2)
+    {
+      transform: rotate(-45deg) translate(0, -1px);
+    }
+    
+    /*
+     * Make this absolute positioned
+     * at the top left of the screen
+     */
+    #menu_forum
+    {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        width: 100%;
+        
+        background: #0C1F2C;
+        list-style-type: none;
+        -webkit-font-smoothing: antialiased;
+        /* to stop flickering of text in safari */
+        transform-origin: 0% 0%;
+        transform: translate(-120%, 0%);
+        transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+    }
+    
+    #menu_forum li .nav_link_burger
+    {  
+        color: #BECDD1;
+        
+        font-size: 16px;
+    }
+    #menu_forum li .nav_link_burger_footer_forum, .span_burger_forum{
+        display: flex;
+        text-align: center;
+        color: #BECDD1;
+        
+        font-size: 10px;
+    }
+    #menu_forum li .signout_btn_burger_forum{
+        display: initial;
+        margin-bottom: 5px;
+        background-color: #197481 ;
+        padding-left: 5px;
+        padding-right: 5px;
+        height: 25px;
+        color: white;
+        border: none;
+    }
+    #menu_forum li .img-avatar{
+        max-width: 150px;
+        max-height: 150px;
+    }
+    
+    /*
+     * And let's slide it in from the left
+     */
+    #menuToggle_forum input:checked ~ ul
+    {
+        transform: none;
+    }
+   
+}
+    
+@media screen and (min-width: 701px){
+    #menuToggle_forum,
+    #menuToggle_forum a,
+    #menuToggle_forum a:hover,
+    #menuToggle_forum input,
+    #menuToggle_forum span,
+    #menuToggle_forum span:first-child,
+    #menuToggle_forum span:nth-last-child(2),
+    #menuToggle_forum input:checked ~ span,
+    #menuToggle_forum input:checked ~ span:nth-last-child(3),
+    #menuToggle_forum input:checked ~ span:nth-last-child(2),
+    #menu_forum,
+    #menu_forum li,
+    #menuToggle_forum input:checked ~ ul { display: none; }
+}
+   

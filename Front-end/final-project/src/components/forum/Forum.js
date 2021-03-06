@@ -10,9 +10,10 @@ import { forumSubjectAction } from "../../storeRedux/actions/ForumSubjectActions
 
 
 function Forum(props) {
-
+    const token = props.signinStore.userToken;
+    const [connected, setConnected] = useState(false)
     const [forumSubject, setForumSubject] = useState([])
-    const [incorrect, setIncorrect] = useState()
+    const [incorrect, setIncorrect] = useState(false)
 
     const getSubject = () => {
         axios.get(`http://localhost:8000/subject`)
@@ -21,24 +22,30 @@ function Forum(props) {
                     setIncorrect(true)
                 } else {
                     setForumSubject(response.data)
-                    console.log(response.data);
+
                     props.forumSubjectAction(response.data);
                 }
             }).catch(err => {
                 if (err.response.status === 403) {
                     setForumSubject([])
-                    setIncorrect(false)
+
                 };
             })
     };
-
+    console.log(forumSubject);
     useEffect(() => {
         getSubject()
 
     }, []);
 
     const newSubject = () => {
-        props.history.push('/forumSubject')
+        if (token) {
+            setConnected(false)
+            props.history.push('/forumSubject')
+        } else {
+            setConnected(true)
+        }
+
     }
 
     function handleDateFormat(date) {
@@ -49,21 +56,21 @@ function Forum(props) {
 
 
     const clickedSubject = (subjectId) => {
-        console.log(subjectId);
+
         props.history.push(`/forum-subject?id=${subjectId}`)
     };
 
     const renderTableData = () => {
         if (forumSubject.length) {
             return forumSubject.map((subject, index) => {
-                const { id, title_subject, id_catégories_sujet, pseudo_utilisateur, date } = subject //destructuring
-                console.log(subject);
+                const { id, title_subject, administ, pseudo, date } = subject //destructuring
+
                 return (
-                    <tr className="table_header" key={id}>
-                        <td onClick={() => clickedSubject(id)} id="table_link">{title_subject}</td>
-                        <td>{id_catégories_sujet === 1 ? "administrateur" : "utilisateur"}</td>
-                        <td>{pseudo_utilisateur}</td>
-                        <td id="table_date">{handleDateFormat(date)}</td>
+                    <tr className="text-center" key={id}>
+                        <td onClick={() => clickedSubject(id)} className="table-column-one">{title_subject}</td>
+                        <td>{administ === 0 ? "admin" : "utilisateur"}</td>
+                        <td>{pseudo}</td>
+                        <td className="text-orange">{handleDateFormat(date)}</td>
                     </tr>
                 )
             })
@@ -75,15 +82,18 @@ function Forum(props) {
     }
 
     return (
-        <div className="forumDiv">
+        <div className="page-container theme-blue">
             < HeaderForum />
-            <div className="shivaDivForum">
-                <div className="forum ifritDivForum">
-                    <p className="forumMsg">BIENVENUE DANS LA SECTION FORUM DE NOTRE SITE < br /> RETROUVEZ TOUS LES SUJETS DE NOS MEMBRES</p>
-                    <button className="btnBlue" onClick={newSubject} > NOUVEAU SUJET </button>
-                    {incorrect ? <h1 className='table_title'>Il n'existe pas encore de sujets</h1> :
-                        <div className="table_div_subject">
-                            <h1 className='table_title'>TOUS LES SUJETS</h1>
+            <div className="shiva-forum">
+                <div className="forum text-center ifrit-forum">
+                    <div className="my-5">BIENVENUE DANS LA SECTION FORUM DE NOTRE SITE < br /> RETROUVEZ TOUS LES SUJETS DE NOS MEMBRES</div>
+                    {connected ? <p className="text-error"> Vous devez être connecté pour accéder à la création de sujet</p> : null}
+                    <button className="btn btn-blue" onClick={newSubject} > NOUVEAU SUJET </button>
+
+
+                    {incorrect ? <p className='text-blueflash'>Il n'existe pas encore de sujets</p> :
+
+                        <div className="div-table text-blueflash mt-3">
                             <table id='table'>
                                 <thead>
                                     <tr>

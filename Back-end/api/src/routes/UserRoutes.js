@@ -17,7 +17,7 @@ const userRoutes = async function (router, con) {
             con.query(`SELECT * FROM utilisateurs WHERE ? `, object, (err, result) => {
                 if (err) throw err
                 if (!result.length) {
-                    throw "This user Id doesn't exist"
+                    res.status(403).send("This user doesn't exist")
                 } else {
                     res.status(200).send(result)
                 }
@@ -36,37 +36,25 @@ const userRoutes = async function (router, con) {
             if (!req.body.password || req.body.password == "") throw "password is required"
             if (!req.body.avatar || req.body.avatar == "") throw "avatar is required"
 
-            let objectEmail = {
-                email: req.body.email
-            }
-            con.query(`SELECT email FROM utilisateurs WHERE ?`, objectEmail, (err, result) => {
+            con.query(`SELECT email FROM utilisateurs WHERE ?`, req.body.email, (err, result) => {
                 if (err) throw err;
                 if (result.length) {
                     res.status(403).send("This email is already in use");
                 } else {
-                    con.query(`SELECT pseudo FROM utilisateurs WHERE ?`, objectPseudo, (err, result) => {
-                        if (err) throw err;
-                        if (result.length) {
-                            res.status(403).send("This pseudo is already in use");
-                        } else {
-                            bcrypt.hash(req.body.password, saltRounds).then((hashPassword) => {
-
-                                let object = {
-                                    email: req.body.email,
-                                    prenom: req.body.prenom,
-                                    pseudo: req.body.pseudo,
-                                    password: hashPassword,
-                                    avatar: req.body.avatar,
-                                    administ: 0
-                                }
-
-                                con.query(`INSERT INTO utilisateurs SET ?`, object, (err, result) => {
-                                    if (err) throw err;
-                                    res.status(200).send("users well inserted");
-                                });
-                            });
+                    bcrypt.hash(req.body.password, saltRounds).then((hashPassword) => {
+                        let object = {
+                            email: req.body.email,
+                            prenom: req.body.prenom,
+                            pseudo: req.body.pseudo,
+                            password: hashPassword,
+                            avatar: req.body.avatar,
+                            administ: 1
                         }
-                    })
+                        con.query(`INSERT INTO utilisateurs SET ?`, object, (err, result) => {
+                            if (err) throw err;
+                            res.status(200).send("users well inserted");
+                        });
+                    });
                 }
             });
         }
@@ -95,9 +83,9 @@ const userRoutes = async function (router, con) {
                         {
                             id: result[0].id,
                             email: result[0].email,
-                            password: result[0].password,
                             admin: result[0].administ,
-                            pseudo: result[0].pseudo
+                            pseudo: result[0].pseudo,
+                            avatar: result[0].avatar
                         },
                         config.secret
                     );
@@ -116,41 +104,73 @@ const userRoutes = async function (router, con) {
         }
     });
 
-    // EDIT PROFIL USER
-    await router.put("/user/edit", verif_token, (req, res) => {
-        try {
-            if (!req.body.prenom || req.body.prenom == "") throw "please provide prenom"
-            if (!req.body.email || req.body.email == "") throw "please provide a email"
-            if (!req.body.password || req.body.password == "") throw "please provide a password"
-            if (!req.body.avatar || req.body.avatar == "") throw "please provide a avatar"
-            if (!req.body.pseudo || req.body.pseudo == "") throw "please provide a pseudo"
 
-            let objectId = {
-                id: req.body.id
-            }
-            con.query(`SELECT id FROM utilisateurs WHERE ?`, objectId, (err, result) => {
+
+
+    // EDIT PROFIL USER PWD
+    await router.put("/user/edit/password/:id", verif_token, (req, res) => {
+        try {
+            if (!req.body || req.body == "") throw "please provide password"
+            con.query(`SELECT id FROM utilisateurs WHERE ?`, req.params, (err, result) => {
                 if (err) throw err;
                 if (!result.length) {
                     throw "This profil doesn't exist"
                 } else {
-
                     bcrypt.hash(req.body.password, saltRounds).then((hashPassword) => {
-                        let object = {
-                            email: req.body.email,
-                            prenom: req.body.prenom,
-                            pseudo: req.body.pseudo,
-                            password: hashPassword,
-                            avatar: req.body.avatar,
+                        let objPwd = {
+                            password: hashPassword
                         }
-                        con.query(`UPDATE utilisateurs SET ? WHERE ?`, [object, objectId], (err, result) => {
+                        con.query(`UPDATE utilisateurs SET ? WHERE ?`, [objPwd, req.params], (err, result) => {
                             if (err) throw err;
-                            else {
-                                res.status(201).send("ALL OK");
-                            }
-                        });
-                    });
+                            res.status(201).send("ALL OK");
+                        })
+                    })
                 }
-            });
+            })
+        } catch (error) {
+            res.status(403).send(error)
+        }
+    });
+
+    // EDIT PROFIL USER
+    await router.put("/user/edit/:id", verif_token, (req, res) => {
+        try {
+            if (!req.body || req.body == "") throw "please provide smth"
+
+            if (req.body.email) {
+                con.query(`SELECT email FROM utilisateurs WHERE ?`, req.body, (err, result) => {
+                    if (err) throw err;
+                    if (result.length) {
+                        res.status(403).send("This email already use")
+                    } else {
+                        con.query(`SELECT id FROM utilisateurs WHERE ?`, req.params, (err, result) => {
+                            if (err) throw err;
+                            if (!result.length) {
+                                throw "This profil doesn't exist"
+                            }
+                            con.query(`UPDATE utilisateurs SET ? WHERE ?`, [req.body, req.params], (err, result) => {
+                                if (err) throw err;
+                                else {
+                                    res.status(201).send("ALL OK");
+                                }
+                            });
+                        })
+                    }
+                })
+            } else {
+                con.query(`SELECT id FROM utilisateurs WHERE ?`, req.params, (err, result) => {
+                    if (err) throw err;
+                    if (!result.length) {
+                        throw "This profil doesn't exist"
+                    }
+                    con.query(`UPDATE utilisateurs SET ? WHERE ?`, [req.body, req.params], (err, result) => {
+                        if (err) throw err;
+                        else {
+                            res.status(201).send("ALL OK");
+                        }
+                    });
+                })
+            }
         }
         catch (error) {
             res.status(403).send(error)
@@ -161,10 +181,8 @@ const userRoutes = async function (router, con) {
     await router.delete("/user/:id", verif_token, (req, res) => {
         try {
             if (!req.params.id || req.params.id == "") throw "id is required"
-            let object = {
-                id: req.params.id
-            }
-            con.query(`DELETE FROM utilisateurs WHERE ?`, object, (err, result) => {
+
+            con.query(`DELETE FROM utilisateurs WHERE ?`, req.params.id, (err, result) => {
                 if (err) throw err;
                 else {
                     res.status(200).send("USER ACCOUNT DELETED");

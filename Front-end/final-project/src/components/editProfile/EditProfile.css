@@ -1,58 +1,56 @@
-.editProfileDiv{
+/* PAGE EDIT PROFIL */
+.page-edit-profil{
     background: url("../../Img/EditProfileImg/ff7swordbuster.png")   no-repeat center ;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    
-    max-width: 100%;
-    min-height: calc(100vh - 35px);
-        /* display: block; */
+    padding-left: 4rem;
+    min-height: 100vh;
 }
 
-.editProfile{
+/* USER INFO */
+.user-info{
     display: flex;
-    height: 100%;
-    padding-left: 5%;
-    padding-top: 1%;
     flex-direction: column;
-    color: #6F9584 ;
-    opacity: 0.9;
+    justify-content: center;
+    margin-bottom: 3rem;
+    color: #00ff8c  !important;
+}
+.user-info .avatar img{
+    max-height: 200px;
+    max-width: 200px;
+}
+.user-info .pseudo {
+    font-size: 2rem;
+    font-weight: bold;
+}
+.user-info .email{
+    font-size: 1.4rem;
+    font-style: italic;
+    color: #fff;
 }
 
-.editProfileMsg{
-    
-    display: flex;
-    height: 100%;
-    padding: 1% 0% 0% 7%;
-    flex-direction: column;
-    color: #6F9584 ;
-}
+@media only screen and (max-width:700px){
+    /* PAGE EDIT PROFIL */
+    .page-edit-profil {
+        background: url("../../Img/EditProfileImg/ff7swordburstermedia.png")   no-repeat center ;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover ;
+        padding-left: 0;
+    }
+    .page-edit-profil > div {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+    /* USER INFO */
+    .user-info { color: #00000087; }
 
-.formEditProfile{
-    margin: 1% 0% 4% 0%;
-    height: auto;
-    display: flex;
-    /* justify-content: center; */
-    
-    flex-direction: column;
-}
-.formEditProfile div{
-    display: flex;
-    padding: 1% 2%;
-    flex-direction: column;
-    max-width: 25%;
-    
-}
-.formEditProfile div input{
-    background-color: #C0F5DE;
-    border: none;
-}
-.formEditProfile div label{
-    align-self: flex-start;
-}
+    .user-info .avatar { text-align: center; }
 
-.forms-btn{
-    padding-top: 1%;
-    padding-left: 9%;
+    .user-info .pseudo, 
+    .user-info .email { text-align: center; }
 }

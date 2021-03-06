@@ -1,11 +1,11 @@
 const mysql = require("mysql2");
-// require("dotenv").config();
+require("dotenv").config();
 
 const connection = mysql.createConnection({
     host: "127.0.0.1",
     user: "root",
-    password: "",
-    database: "finalproject",
+    password: process.env.REACT_APP_DB_PWD,
+    database: process.env.REACT_APP_DB_NAME,
     port: 3306,
     multipleStatements: true
 });
@@ -30,8 +30,8 @@ function createTableUser() {
 function createTableSubjetForum() {
     const myTable = `CREATE TABLE IF NOT EXISTS sujet_forum(
         id INT PRIMARY KEY AUTO_INCREMENT,
-        pseudo_utilisateur VARCHAR(50),
-        FOREIGN KEY (pseudo_utilisateur) REFERENCES utilisateurs(pseudo),
+        id_utilisateur INT NOT NULL,
+        FOREIGN KEY (id_utilisateur) REFERENCES utilisateurs(id),
         date DATE NOT NULL,
         contenu TEXT(1000),
         title_subject VARCHAR(50),

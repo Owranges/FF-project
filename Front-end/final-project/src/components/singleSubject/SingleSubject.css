@@ -1,20 +1,13 @@
-#div_single_subject{
-    background-color: #143750 ;
+
+
+/* SUBJECT USER */
+.subject-name-date{
+    display: flex;
+    justify-content: space-between;
 }
 
-/* IFRIT SHIVA IMG */
-.shivaDiv{
-    background: url(../../Img/ForumImg/ff7shiva50.png)  no-repeat ;
-    min-height: 100vh;
-    background-size: 50% auto;
-}
 
-.ifritDiv{
-   background: url(../../Img/ForumImg/ff7ifrit50.png) no-repeat;
-   min-height: 50vh;
-   background-size: 40% auto;
-   overflow: visible;
-   padding-bottom: 30%;
-   margin-left: 0px;
-   background-position: right -35% bottom -0%;
-}
+/* ADD COMMENT SECTION */
+
+
+
