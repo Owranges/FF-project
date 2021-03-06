@@ -17,13 +17,6 @@
 .nav_blue a:visited { color: #BECDD1; }
 .nav_blue a:hover   { color: orange; }
 
-/* BUTTON */
-.signout_btn-blue {
-    background-color: #197481 ;
-    color: white;
-    border: none;
-    padding: 0.1%;
-}
 
 /* FOOTER */ 
 .footer_blue {
@@ -50,13 +43,3 @@
 
 .footer_forum_span         { color: #BECDD1; }
 
-@media screen and (max-width: 780px){
-    .site-title          { font-size: 1.4em; }
-
-    .nav_blue            { font-size: 1em; }
-    .nav_blue a:link     { font-size: 1em; }
-    .nav_blue a:visited  { font-size: 1em; }
-    
-    /* BUTTON */
-    .signout_btn-blue    { font-size: 1em; }
-}

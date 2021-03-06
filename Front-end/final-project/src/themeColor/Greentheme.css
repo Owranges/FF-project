@@ -15,16 +15,11 @@
     text-decoration: none
 }
 .nav a:visited { color: #5BFFB5;  }
-.nav a:hover { color: #5BFFB5; }
+.nav a:hover { color: #EF942A; }
 
 /* BUTTON */
 
-/* .signout_btn{
-    background-color: #057543 ;
-    color: white;
-    border: none;
-    padding: 0.2%;
-} */
+
 
 /* FOOTER */
 .footer{
@@ -52,14 +47,4 @@
     color: #5BFFB5;
 }
 
-@media screen and (max-width: 780px){
-    .site-title    { font-size: 1.4em; }
-
-    .nav           { font-size: 1em; }
-    .nav a:link    { font-size: 1em; }
-    .nav a:visited { font-size: 1em; }
-    
-    /* BUTTON */
-    .signout_btn   { font-size: 1em; }
-}
 

@@ -5,7 +5,15 @@
     .header{
         height: 35px;
     }
-    .title_burger{
+     /* BURGER MENU  */
+    .logo-img-burger{
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 30%;
+      margin-bottom: 15px;
+    }
+    .title-burger{
         color: #5BFFB5;
         font-size: 1.2em;
         margin-bottom: 10px;
@@ -26,13 +34,13 @@
     #menuToggle a
     {
       text-decoration: none;
-      color: #232323;
+      color: #5BFFB5;
       transition: color 0.3s ease;
     }
     
     #menuToggle a:hover
     {
-      color: tomato;
+      color: orange;
     }
     
     
@@ -44,12 +52,9 @@
       position: absolute;
       top: -7px;
       left: -5px;
-      
       cursor: pointer;
-      
       opacity: 0; /* hide this */
       z-index: 2; /* and place it over the hamburger */
-      
       -webkit-touch-callout: none;
     }
     
@@ -63,14 +68,10 @@
       height: 4px;
       margin-bottom: 5px;
       position: relative;
-      
       background: #5BFFB5;
       border-radius: 3px;
-      
       z-index: 1;
-      
       transform-origin: 4px 0px;
-      
       transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
                   background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
                   opacity 0.55s ease;
@@ -126,7 +127,6 @@
         justify-content: center;
         position: absolute;
         width: 100%;
-        
         background: #1b2625;
         list-style-type: none;
         -webkit-font-smoothing: antialiased;
@@ -136,17 +136,15 @@
         transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
     }
     
-    #menu li .nav_link_burger
+    #menu li .nav-link-burger
     {  
         color: #5BFFB5;
-        
         font-size: 16px;
     }
-    #menu li .nav_link_burger_footer, .span_burger{
+    #menu li .nav-link-burger, .span-burger{
         display: flex;
         text-align: center;
         color: #5BFFB5;
-        
         font-size: 10px;
     }
     #menu li .signout_btn_burger{

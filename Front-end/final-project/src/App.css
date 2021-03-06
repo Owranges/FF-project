@@ -27,6 +27,11 @@ textarea{
     min-height: 150px;
 }
 
+/* HEADER */
+.header{
+    min-height: 25%;
+}
+
 /* BUTTON */ 
 .btn{
     padding-left: 5px;
@@ -135,11 +140,6 @@ textarea{
 .logo-img{
     max-width: 5%;
 }
-/* HEADER */
-.header {
-    height: 20%;
-}
-
 
 /* BACKGROUND IMAGE */
 .shiva{

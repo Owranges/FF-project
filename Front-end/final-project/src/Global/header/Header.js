@@ -31,14 +31,14 @@ function Header(props) {
             <nav className="nav">
                 <img src={fflogo} className='logo-img' alt='Logo meteor from ff7' />
                 <span className="site-title ">FIRST FANTASY</span>
-                <Link className="nav_link" to="/">ACCUEIL</Link>
-                <Link className="nav_link" to="/univers">UNIVERS</Link>
+                <Link to="/">ACCUEIL</Link>
+                <Link to="/univers">UNIVERS</Link>
                 {token.id ? <img className="img-avatar" src={token.avatar} alt='aaaaa' onError={defaultSrc} /> : null}
-                <Link className="nav_link" to="/forum">FORUM</Link>
-                {token.id ? <Link className="nav_link" to="/edit-profile">PROFIL</Link> : <Link className="nav_link" to="/sign-up">INSCRIPTION</Link>}
-                {token.id ? null : <Link className="nav_link" to="/sign-in">CONNEXION</Link>}
-                {token.admin ? <Link className="nav_link" to="/admin">ADMIN</Link> : null}
-                {token.id ? <button onClick={onSignout} className="btn btn-green my-3">
+                <Link to="/forum">FORUM</Link>
+                {token.id ? <Link to="/edit-profile">PROFIL</Link> : <Link to="/sign-up">INSCRIPTION</Link>}
+                {token.id ? null : <Link to="/sign-in">CONNEXION</Link>}
+                {token.admin ? <Link to="/admin">ADMIN</Link> : null}
+                {token.id ? <button onClick={onSignout} className="btn btn-green">
                     DECONNEXION
          </button> : null}
             </nav>
@@ -49,23 +49,25 @@ function Header(props) {
                 <span></span>
                 <ul id="menu">
                     <div>
-                        <li className="title_burger">FIRST FANTASY</li>
-                        <img src={fflogo} className='logo-img_burger' alt='Logo meteor from ff7' />
+                        <li className="title-burger">
+                            FIRST FANTASY
+                        </li>
+                        <img src={fflogo} className='logo-img-burger' alt='Logo meteor from ff7' />
                     </div>
-                    <li><Link className="nav_link_burger" to="/">ACCUEIL</Link></li>
-                    <li><Link className="nav_link_burger" to="/univers">UNIVERS</Link></li>
-                    <li><Link className="nav_link_burger" to="/forum">FORUM</Link></li>
-                    <li>{token.id ? <Link className="nav_link_burger" to="/edit-profile">PROFIL</Link> : <Link className="nav_link_burger" to="/sign-up">INSCRIPTION</Link>}</li>
-                    <li>{token.id ? null : <Link className="nav_link_burger" to="/sign-in">CONNEXION</Link>}</li>
-                    <li>{token.admin ? <Link className="nav_link_burger" to="/admin">ADMIN</Link> : null}</li>
+                    <li><Link to="/">ACCUEIL</Link></li>
+                    <li><Link to="/univers">UNIVERS</Link></li>
+                    <li><Link to="/forum">FORUM</Link></li>
+                    <li>{token.id ? <Link to="/edit-profile">PROFIL</Link> : <Link to="/sign-up">INSCRIPTION</Link>}</li>
+                    <li>{token.id ? null : <Link to="/sign-in">CONNEXION</Link>}</li>
+                    <li>{token.admin ? <Link to="/admin">ADMIN</Link> : null}</li>
                     <li>{token.id ? <button onClick={onSignout} className="btn btn-green my-3">
                         DECONNEXION
                         </button> : null}</li>
                     <li>{token ? <img className="img-avatar" src={token.avatar} alt='aaaaa' onError={defaultSrc} /> : null}</li>
-                    <li><Link className="nav_link_burger_footer" to="/site-map">PLAN DU SITE</Link></li>
-                    <li><Link className="nav_link_burger_footer" to="/mentions-legales">MENTIONS LEGALES</Link></li>
-                    <li><Link className="nav_link_burger_footer" to="/cgu">CONDITIONS GENERAL</Link></li>
-                    <li><Link className="nav_link_burger_footer" to="/contact">Contact : frank.owen@gmail.com</Link></li>
+                    <li><Link to="/site-map">PLAN DU SITE</Link></li>
+                    <li><Link to="/mentions-legales">MENTIONS LEGALES</Link></li>
+                    <li><Link to="/cgu">CONDITIONS GENERAL</Link></li>
+                    <li><Link to="/contact">Contact : frank.owen@gmail.com</Link></li>
                     <li className="span_burger">{dateCopy}</li>
                 </ul>
             </div>
