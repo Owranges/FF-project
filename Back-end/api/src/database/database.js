@@ -1,5 +1,7 @@
 const mysql = require("mysql2");
 require("dotenv").config();
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 const connection = mysql.createConnection({
     host: "127.0.0.1",
@@ -14,7 +16,7 @@ const connection = mysql.createConnection({
 function createTableUser() {
     const myTable = `CREATE TABLE IF NOT EXISTS utilisateurs(
         id int PRIMARY KEY auto_increment,
-        email VARCHAR(255)NOT NULL,
+        email VARCHAR(50)UNIQUE NOT NULL,
         prenom VARCHAR(255)NOT NULL,
         pseudo VARCHAR(255)NOT NULL,
         password VARCHAR(255)NOT NULL,
@@ -44,17 +46,17 @@ function createTableSubjetForum() {
 
     });
 }
-function createTableCategorySubject() {
+// function createTableCategorySubject() {
 
-    const myTable = `CREATE TABLE IF NOT EXISTS catégories_sujet(
-        id INT PRIMARY KEY AUTO_INCREMENT,
-        nom VARCHAR(255) NOT NULL
-    )`;
-    connection.query(myTable, (err, results, fields) => {
-        if (err) throw err;
+//     const myTable = `CREATE TABLE IF NOT EXISTS catégories_sujet(
+//         id INT PRIMARY KEY AUTO_INCREMENT,
+//         nom VARCHAR(255) NOT NULL
+//     )`;
+//     connection.query(myTable, (err, results, fields) => {
+//         if (err) throw err;
 
-    });
-}
+//     });
+// }
 function createTableCommentaries() {
     const myTable = `CREATE TABLE IF NOT EXISTS commentaires(
         id INT PRIMARY KEY AUTO_INCREMENT,
@@ -103,10 +105,32 @@ connection.connect((err) => {
     console.log("Well connected");
     createTableUser();
     createTableSubjetForum();
-    createTableCategorySubject();
+    // createTableCategorySubject();
     createTableCommentaries();
     createTableArticlesAdmin();
     createTableImageArticles();
 });
 
+//Create Admin
+let password = process.env.REACT_APP_ADMIN_PASSWORD
+let email = process.env.REACT_APP_ADMIN_EMAIL
+let prenom = process.env.REACT_APP_ADMIN_PRENOM
+let pseudo = process.env.REACT_APP_ADMIN_PSEUDO
+
+let avatar = process.env.REACT_APP_ADMIN_AVATAR
+let administ = 1
+
+
+bcrypt.hash(password, saltRounds).then((hashPassword) => {
+
+    password = hashPassword
+
+    connection.query(`INSERT IGNORE INTO utilisateurs (email, prenom, pseudo, password, avatar, administ) VALUES ('${email}','${prenom}','${pseudo}','${password}','${avatar}','${administ}')`, (err, result) => {
+        console.log('admin not created');
+        if (err) throw err;
+    });
+});
+
 module.exports = connection
+
+

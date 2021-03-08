@@ -33,13 +33,11 @@ function Signin(props) {
                         let tokenDecoded = jwt_decode(response.data.token);
                         setIncorrect(false)
                         props.history.push('/')
+                        localStorage.setItem('token', response.data.token);
                         props.signinAction({ tokenDecoded, token: response.data.token });
                     }
-                }).catch(err => {
-
-                    if (err.response.status === 403) {
-                        setIncorrect(true)
-                    };
+                }).catch(() => {
+                    setIncorrect(true)
                 })
         } else {
             setValidation(true)
@@ -72,7 +70,7 @@ function Signin(props) {
                         </div>
                         {incorrect ? <div className="text-error"> Email ou Mot de passe incorrect</div> : null}
                         {validations ? <div className="text-error"> Veuillez respecter le format des champs</div> : null}
-                        <div className="text-center">
+                        <div className="text-centered">
                             <button className="btn btn-green" onClick={formSubmit}>CONNEXION</button>
                         </div>
                     </form>

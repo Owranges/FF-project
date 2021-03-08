@@ -39,7 +39,7 @@ function CommentariesSubject(props) {
                         <p className="text-orange">{handleDateFormat(item.date_commentaires)}</p>
                     </div>
                     <div className='subject-pseudo-avatar'>
-                        <p >{item.pseudo}</p>
+                        <p className="font-bold">{item.pseudo}</p>
                     </div>
                     <div className="text-white">{item.contenu_commentaires}</div>
                     <hr></hr>

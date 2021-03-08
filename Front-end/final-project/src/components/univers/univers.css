@@ -1,0 +1,32 @@
+.profil-personnage{
+    
+    max-width: 350px;
+
+}
+.page-univers{
+    background: url("../../Img/UniversImg/ff7fondu.jpg")    center ;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    min-height: 100vh;
+   
+}
+.page-img{
+    padding: 0;
+    margin: 0;
+    font-weight: bold;
+    font-size: 1.5rem;
+    
+
+}
+
+
+@media only screen and (max-width: 700px ){
+    .profil-personnage{
+    
+        max-width: 250px;
+    
+    }
+    
+}

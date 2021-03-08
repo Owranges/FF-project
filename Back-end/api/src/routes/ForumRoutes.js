@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const saltRounds = 10;
 const verif_token = require("../middleware/token");
+const verif_token_admin = require("../middleware/tokenAdmin");
 const config = require("../modules/config")
 
 const forumRoutes = async function (router, con) {
@@ -117,30 +118,30 @@ const forumRoutes = async function (router, con) {
         }
     });
     // DELETE A COMMENTARY
-    await router.delete("/subject/:id_auteur/:idCommentary", (req, res) => {
-        try {
-            if (!req.params.id_auteur || req.params.id_auteur == "") throw "id_author is required"
-            if (!req.params.idCommentary || req.params.idCommentary == "") throw "idCommentary is required"
-            let object = {
-                id_auteur: req.params.id_auteur
-            }
-            let objectTwo = {
-                id: req.params.idCommentary
-            }
+    //     await router.delete("/subject/:id_auteur/:idCommentary", (req, res) => {
+    //         try {
+    //             if (!req.params.id_auteur || req.params.id_auteur == "") throw "id_author is required"
+    //             if (!req.params.idCommentary || req.params.idCommentary == "") throw "idCommentary is required"
+    //             let object = {
+    //                 id_auteur: req.params.id_auteur
+    //             }
+    //             let objectTwo = {
+    //                 id: req.params.idCommentary
+    //             }
 
-            con.query(`DELETE FROM commentaires WHERE ? AND ?`, [object, objectTwo], (err, result) => {
-                if (err) throw err;
-                if (result.affectedRows == 1) {
-                    res.status(200).send("USER COMMENTARY DELETED");
-                } else {
-                    res.status(403).send("THIS COMMENTARY DOES NOT EXIST")
-                }
+    //             con.query(`DELETE FROM commentaires WHERE ? AND ?`, [object, objectTwo], (err, result) => {
+    //                 if (err) throw err;
+    //                 if (result.affectedRows == 1) {
+    //                     res.status(200).send("USER COMMENTARY DELETED");
+    //                 } else {
+    //                     res.status(403).send("THIS COMMENTARY DOES NOT EXIST")
+    //                 }
 
-            });
-        } catch (error) {
-            res.status(403).send(error)
-        }
-    });
+    //             });
+    //         } catch (error) {
+    //             res.status(403).send(error)
+    //         }
+    //     });
 
 }
 

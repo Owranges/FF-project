@@ -1,0 +1,26 @@
+.table-admin{
+    width: 100%;
+    table-layout: fixed;    
+}
+
+.forum-admin{
+    height: 40%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color:green;
+}
+
+.nav-admin{
+    display: flex;
+    height: inherit;
+    justify-content: space-around;
+    align-items: center;
+}
+.nav-admin a:link {
+    color: #5BFFB5;
+    text-decoration: none
+}
+.nav-admin a:visited { color: #5BFFB5;  }
+.nav-admin a:hover { color: #EF942A; }

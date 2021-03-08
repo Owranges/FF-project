@@ -3,16 +3,7 @@ import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 
 //COMPONENTS ROUTES
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import App from './App';
-import Signin from './components/signin/Signin';
-import Signup from './components/signup/Signup';
-import EditProfile from './components/editProfile/EditProfile'
-import Forum from './components/forum/Forum'
-import ForumSubject from './components/forumSubject/ForumSubject'
-import ProtectedRoutes from './Global/protectedRoutes/ProtectedRoutes'
-import SingleSubject from './components/singleSubject/SingleSubject'
-import Admin from './components/admin/Admin'
 // STORE + PERSISTANT
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
@@ -42,23 +33,7 @@ const persistor = persistStore(store);
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate persistor={persistor}>
-      <Router>
-        <Switch>
-          <Route exact path="/" component={App} />
-          <Route path="/sign-in" component={Signin} />
-          <Route path="/sign-up" component={Signup} />
-          <Route path="/edit-profile" component={EditProfile} />
-          <Route path="/forum" component={Forum} />
-          <Route path="/forumSubject" component={ForumSubject} />
-          <Route path="/forum-subject" component={SingleSubject} />
-          <Route path="/admin" component={Admin} />
-          {/* <ProtectedRoutes path="" component={ } /> */}
-          {/* <Route path='*' exact={true} component={App} /> */}
-          {/* <Route path="/profiluser" component={ProfilUser} />
-          <Route path="/edit-product" component={EditProduct} />
-          <Route path="/cart" component={Cart} /> */}
-        </Switch>
-      </Router>
+      <App></App>
     </PersistGate>
   </Provider>,
   document.getElementById('root')

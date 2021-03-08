@@ -9,8 +9,6 @@
 .homeMsgDiv{
   display: flex;
   flex-direction: row;
-  width: auto;
-  height: auto;
   padding-left: 10%;
   padding-top: 5%;
   padding-left: 50%;

@@ -11,9 +11,11 @@ import { passwordSchema } from "../../validations/editValidations.js/editPasswor
 import { emailSchema } from "../../validations/editValidations.js/editEmailValidations"
 import { avatarSchema } from "../../validations/editValidations.js/editAvatarValidations"
 import { pseudoSchema } from "../../validations/editValidations.js/editPseudoValidations"
+import { signoutAction } from "../../storeRedux/actions/SignoutActions";
 
 
 function EditProfile(props) {
+    const [isAdmin, setIsAdmin] = useState(false)
     const [incorrectEmail, setIncorrectEmail] = useState(false)
     const [incorrectPassword, setIncorrectPassword] = useState(false)
     const [incorrectAvatar, setIncorrectAvatar] = useState(false)
@@ -31,9 +33,18 @@ function EditProfile(props) {
     }
     const token = props.signinStore.userToken;
 
+
+    const onTokenAdmin = () => {
+        if (props.signinStore.userInfo.admin) {
+            setIsAdmin(true)
+        } else {
+            setIsAdmin(false)
+        }
+    }
     const onSignout = () => {
         props.signoutAction();
         props.history.push("/");
+        localStorage.clear()
     };
 
     const getUserInfo = () => {
@@ -43,7 +54,7 @@ function EditProfile(props) {
                     setInfoUser(response.data[0])
                     setInfoProfil(false)
                 }
-            }).catch(err => {
+            }).catch(() => {
 
                 setInfoProfil(true)
             })
@@ -55,8 +66,10 @@ function EditProfile(props) {
 
     useEffect(() => {
 
-        if (token) getUserInfo()
-        else {
+        if (token) {
+            onTokenAdmin()
+            getUserInfo()
+        } else {
             props.history.push('/')
         }
     }, []);
@@ -81,7 +94,7 @@ function EditProfile(props) {
                             onSignout()
                         }, 5000);
                     }
-                }).catch(err => {
+                }).catch(() => {
                     setIncorrectEmail(false)
                     setIncorrect(true)
                 })
@@ -104,13 +117,14 @@ function EditProfile(props) {
                 .then(response => {
                     if (response) {
                         setIncorrectPassword(false)
+                        setIncorrect(false)
                         setInserted(true)
                         setTimeout(() => {
                             onSignout()
                         }, 5000);
                     }
-                }).catch(err => {
-
+                }).catch(() => {
+                    setIncorrect(true)
                 })
         } else {
             setIncorrectPassword(true)
@@ -131,13 +145,14 @@ function EditProfile(props) {
                 .then(response => {
                     if (response) {
                         setIncorrectPseudo(false)
+                        setIncorrect(false)
                         setInserted(true)
                         setTimeout(() => {
                             onSignout()
                         }, 5000);
                     }
-                }).catch(err => {
-
+                }).catch(() => {
+                    setIncorrect(true)
                 })
         } else {
             setIncorrectPseudo(true)
@@ -158,13 +173,14 @@ function EditProfile(props) {
                 .then(response => {
                     if (response) {
                         setIncorrectAvatar(false)
+                        setIncorrect(false)
                         setInserted(true)
                         setTimeout(() => {
                             onSignout()
                         }, 5000);
                     }
-                }).catch(err => {
-
+                }).catch(() => {
+                    setIncorrect(true)
                 })
         } else {
             setIncorrectAvatar(true)
@@ -173,6 +189,18 @@ function EditProfile(props) {
 
     };
 
+    const deleteAccount = () => {
+        const headers = {
+            "Content-Type": "application/json",
+            authorization: props.signinStore.userToken,
+        };
+        axios.delete(`http://localhost:8000/user/${props.signinStore.userInfo.id}`, { headers: headers })
+            .then(() => {
+                onSignout()
+            }).catch(() => {
+                setIncorrect(true)
+            })
+    }
 
     return (
         <div >
@@ -192,20 +220,21 @@ function EditProfile(props) {
                     </div>
                 </div>
                 <div>
+                    {incorrect ? <div className='text-error'>Une erreur s'est produite </div> : null}
                     <form onSubmit={handleSubmit} className="form">
                         <div>
                             <label>Adresse Mail:</label>
                             <input className="input-control" type="email" name="email" id="email" required placeholder="exemple@gmail.com" onChange={e => setEmail(e.target.value)} />
-                            <button className="btn btn-green" onClick={formSubmitEmail} disabled={inserted}>Modifier   </button>
+                            <button className="btn btn-green" onClick={formSubmitEmail} disabled={inserted, isAdmin}>Modifier   </button>
                         </div>
                         {incorrectEmail ? <div className='text-error'>Respectez le format du champ</div> : null}
-                        {incorrect ? <div className='text-error'>Une erreur s'est produite </div> : null}
+
                     </form>
                     <form onSubmit={handleSubmit} className="form">
                         <div>
                             <label>Mot de passe:</label>
                             <input className="input-control" type="password" name="password" id="password" required placeholder="Mot de passe" onChange={e => setPassword(e.target.value)} />
-                            <button className="btn btn-green" onClick={formSubmitPassword} disabled={inserted}>Modifier   </button>
+                            <button className="btn btn-green" onClick={formSubmitPassword} disabled={inserted, isAdmin}>Modifier   </button>
                         </div>
                         {incorrectPassword ? <div className='text-error'>Respectez le format du champ</div> : null}
                     </form>
@@ -213,7 +242,7 @@ function EditProfile(props) {
                         <div>
                             <label>Pseudo:</label>
                             <input className="input-control" type="pseudo" name="pseudo" id="pseudo" required placeholder="Tifa" onChange={e => setPseudo(e.target.value)} />
-                            <button className="btn btn-green" onClick={formSubmitPseudo} disabled={inserted}>Modifier   </button>
+                            <button className="btn btn-green" onClick={formSubmitPseudo} disabled={inserted, isAdmin}>Modifier   </button>
                         </div>
                         {incorrectPseudo ? <div className='text-error'>Respectez le format du champ</div> : null}
                     </form>
@@ -221,11 +250,12 @@ function EditProfile(props) {
                         <div>
                             <label>Image de profil:</label>
                             <input className="input-control" type="avatar" name="avatar" id="avatar" required placeholder="lien Url" onChange={e => setAvatar(e.target.value)} />
-                            <button className="btn btn-green" onClick={formSubmitAvatar} disabled={inserted} >Modifier   </button>
+                            <button className="btn btn-green" onClick={formSubmitAvatar} disabled={inserted, isAdmin} >Modifier   </button>
                         </div>
                         {incorrectAvatar ? <div className='text-error'>Respectez le format du champ</div> : null}
                     </form>
                     {inserted ? <div className='text-success'>Votre information à bien été modifié vous allez être déconnecter d'ici quelques secondes.</div> : null}
+                    <button className="btn btn-red my-4" onClick={deleteAccount} disabled={inserted, isAdmin} >Supprimer votre compte</button>
                 </div>
             </div>
             < Footer />
@@ -233,7 +263,7 @@ function EditProfile(props) {
     );
 }
 
-const mapDispatchToProps = { signinAction };
+const mapDispatchToProps = { signinAction, signoutAction };
 const mapStateToProps = (state) => ({
     signinStore: state.signin,
 });

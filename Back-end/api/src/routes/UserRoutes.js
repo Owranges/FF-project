@@ -36,8 +36,13 @@ const userRoutes = async function (router, con) {
             if (!req.body.password || req.body.password == "") throw "password is required"
             if (!req.body.avatar || req.body.avatar == "") throw "avatar is required"
 
-            con.query(`SELECT email FROM utilisateurs WHERE ?`, req.body.email, (err, result) => {
+            let obj = {
+                email: req.body.email
+            }
+
+            con.query(`SELECT email FROM utilisateurs WHERE ?`, obj, (err, result) => {
                 if (err) throw err;
+
                 if (result.length) {
                     res.status(403).send("This email is already in use");
                 } else {
@@ -48,7 +53,7 @@ const userRoutes = async function (router, con) {
                             pseudo: req.body.pseudo,
                             password: hashPassword,
                             avatar: req.body.avatar,
-                            administ: 1
+                            administ: 0
                         }
                         con.query(`INSERT INTO utilisateurs SET ?`, object, (err, result) => {
                             if (err) throw err;
@@ -181,11 +186,13 @@ const userRoutes = async function (router, con) {
     await router.delete("/user/:id", verif_token, (req, res) => {
         try {
             if (!req.params.id || req.params.id == "") throw "id is required"
-
-            con.query(`DELETE FROM utilisateurs WHERE ?`, req.params.id, (err, result) => {
+            con.query(`DELETE FROM utilisateurs WHERE utilisateurs.id = ?`, req.params.id, (err, result) => {
                 if (err) throw err;
-                else {
+                if (result.affectedRows == 1) {
                     res.status(200).send("USER ACCOUNT DELETED");
+                }
+                else {
+                    res.status(403).send("USER ACCOUNT DOES NOT EXIST");
                 }
             });
         } catch (error) {

@@ -17,6 +17,7 @@ function HeaderForum(props) {
     const onSignout = () => {
         props.signoutAction();
         props.history.push("/");
+        localStorage.clear()
     };
 
 
@@ -32,9 +33,8 @@ function HeaderForum(props) {
                 <span className="site-title text-bluelight">FIRST FANTASY</span>
                 <Link to="/">ACCUEIL</Link>
                 <Link to="/univers">UNIVERS</Link>
-                {token.id ? <img className="img-avatar" src={token.avatar} alt='aaaaa' onError={defaultSrc} /> : null}
                 <Link to="/forum">FORUM</Link>
-                {token.id ? null : <Link className="nav_link" to="/sign-up">INSCRIPTION</Link>}
+                {token.id ? null : <Link to="/sign-up">INSCRIPTION</Link>}
                 {token.id ? <Link to="/edit-profile">PROFIL</Link> : <Link to="/sign-in">CONNEXION</Link>}
                 {token.admin ? <Link to="/admin">ADMIN</Link> : null}
                 {token.id ? <button onClick={onSignout} className="btn btn-blue">
@@ -66,10 +66,10 @@ function HeaderForum(props) {
                         DECONNEXION
                     </button> : null}</li>
                     <li >{token.id ? <img className="img-avatar" src={token.avatar} alt='aaaaa' onError={defaultSrc} /> : null}</li>
-                    <li><Link to="/site-map">PLAN DU SITE</Link></li>
+                    {/* <li><Link to="/site-map">PLAN DU SITE</Link></li> */}
                     <li><Link to="/mentions-legales">MENTIONS LEGALES</Link></li>
-                    <li><Link to="/cgu">CONDITIONS GENERAL</Link></li>
-                    <li><Link to="/contact">Contact : frank.owen@gmail.com</Link></li>
+                    {/* <li><Link to="/cgu">CONDITIONS GENERAL</Link></li> */}
+                    <li className="span-burger-forum">Contact : frank.owen@gmail.com</li>
                     <li className="span-burger-forum">{dateCopy}</li>
 
 

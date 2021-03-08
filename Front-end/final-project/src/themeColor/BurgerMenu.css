@@ -2,6 +2,9 @@
     .logo-img, .site-title, .nav, .nav a:link, .nav a:visited, footer, .signout_btn { 
         display: none;
     }
+    .font-footer{
+      font-size: 0.8em;
+    }
     .header{
         height: 35px;
     }
@@ -136,12 +139,12 @@
         transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
     }
     
-    #menu li .nav-link-burger
+    #menu li .nav
     {  
         color: #5BFFB5;
         font-size: 16px;
     }
-    #menu li .nav-link-burger, .span-burger{
+    #menu li .nav-link-footer, .span-burger{
         display: flex;
         text-align: center;
         color: #5BFFB5;

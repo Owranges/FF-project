@@ -14,10 +14,10 @@ function Header(props) {
     const token = props.signinStore.userInfo;
     const theDate = new Date()
     const dateCopy = `${theDate.getFullYear()} Copyright: Brunet Frank-Owen`
-    console.log(token);
     const onSignout = () => {
         props.signoutAction();
         props.history.push("/");
+        localStorage.clear()
     };
 
 
@@ -33,7 +33,7 @@ function Header(props) {
                 <span className="site-title ">FIRST FANTASY</span>
                 <Link to="/">ACCUEIL</Link>
                 <Link to="/univers">UNIVERS</Link>
-                {token.id ? <img className="img-avatar" src={token.avatar} alt='aaaaa' onError={defaultSrc} /> : null}
+                {/* {token.id ? <img className="img-avatar" src={token.avatar} alt='aaaaa' onError={defaultSrc} /> : null} */}
                 <Link to="/forum">FORUM</Link>
                 {token.id ? <Link to="/edit-profile">PROFIL</Link> : <Link to="/sign-up">INSCRIPTION</Link>}
                 {token.id ? null : <Link to="/sign-in">CONNEXION</Link>}
@@ -63,12 +63,12 @@ function Header(props) {
                     <li>{token.id ? <button onClick={onSignout} className="btn btn-green my-3">
                         DECONNEXION
                         </button> : null}</li>
-                    <li>{token ? <img className="img-avatar" src={token.avatar} alt='aaaaa' onError={defaultSrc} /> : null}</li>
-                    <li><Link to="/site-map">PLAN DU SITE</Link></li>
+                    <li>{token.id ? <img className="img-avatar" src={token.avatar} alt='avatar' onError={defaultSrc} /> : null}</li>
+                    {/* <li><Link to="/site-map">PLAN DU SITE</Link></li> */}
                     <li><Link to="/mentions-legales">MENTIONS LEGALES</Link></li>
-                    <li><Link to="/cgu">CONDITIONS GENERAL</Link></li>
-                    <li><Link to="/contact">Contact : frank.owen@gmail.com</Link></li>
-                    <li className="span_burger">{dateCopy}</li>
+                    {/* <li><Link to="/cgu">CONDITIONS GENERAL</Link></li> */}
+                    <li className="span-burger">Contact : frank.owen@gmail.com</li>
+                    <li className="span-burger">{dateCopy}</li>
                 </ul>
             </div>
         </header>

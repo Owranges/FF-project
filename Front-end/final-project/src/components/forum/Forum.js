@@ -25,14 +25,11 @@ function Forum(props) {
 
                     props.forumSubjectAction(response.data);
                 }
-            }).catch(err => {
-                if (err.response.status === 403) {
-                    setForumSubject([])
-
-                };
+            }).catch(() => {
+                setForumSubject([])
             })
     };
-    console.log(forumSubject);
+
     useEffect(() => {
         getSubject()
 
@@ -66,7 +63,7 @@ function Forum(props) {
                 const { id, title_subject, administ, pseudo, date } = subject //destructuring
 
                 return (
-                    <tr className="text-center" key={id}>
+                    <tr className="text-centered" key={id}>
                         <td onClick={() => clickedSubject(id)} className="table-column-one">{title_subject}</td>
                         <td>{administ === 0 ? "admin" : "utilisateur"}</td>
                         <td>{pseudo}</td>
@@ -85,7 +82,7 @@ function Forum(props) {
         <div className="page-container theme-blue">
             < HeaderForum />
             <div className="shiva-forum">
-                <div className="forum text-center ifrit-forum">
+                <div className="forum text-centered ifrit-forum">
                     <div className="my-5">BIENVENUE DANS LA SECTION FORUM DE NOTRE SITE < br /> RETROUVEZ TOUS LES SUJETS DE NOS MEMBRES</div>
                     {connected ? <p className="text-error"> Vous devez être connecté pour accéder à la création de sujet</p> : null}
                     <button className="btn btn-blue" onClick={newSubject} > NOUVEAU SUJET </button>
@@ -94,7 +91,7 @@ function Forum(props) {
                     {incorrect ? <p className='text-blueflash'>Il n'existe pas encore de sujets</p> :
 
                         <div className="div-table text-blueflash mt-3">
-                            <table id='table'>
+                            <table className='tables'>
                                 <thead>
                                     <tr>
                                         <th className="tab_row">Sujet</th>

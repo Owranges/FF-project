@@ -36,7 +36,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-#table{
+.tables{
     margin-left:auto; 
     margin-right:auto; 
     width: 80%;

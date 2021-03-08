@@ -21,6 +21,8 @@ function SingleSubject(props) {
     const [ownerSubject, setOwnerSubject] = useState();
     const [contained, setContained] = useState('');
     const [userDeleted, setUserDeleted] = useState(false);
+    const [axiosFailed, setAxiosFailed] = useState(false)
+    const [textComment, setTextComment] = useState(false)
 
     function defaultSrc(ev) {
         ev.target.src = `${iconprofil}`
@@ -28,21 +30,20 @@ function SingleSubject(props) {
     const todayDate = () => (
         new Date().toISOString().slice(0, 10)
     )
-    const subject = () => {
-        let mySubject = props.forumSubject.forumSubject.find(
+    const subject = async () => {
+        let mySubject = await props.forumSubject.forumSubject.find(
             (subj) => subj.id == urlId
         )
         setSubjectInfo(mySubject);
     };
+
     const getInfoOwnerSubject = () => {
         axios.get(`http://localhost:8000/user/${subjectInfo.id_utilisateur}`)
             .then(response => {
 
                 setOwnerSubject(response.data[0]);
-            }).catch((err) => {
-                if (err) {
-                    setUserDeleted("*****")
-                }
+            }).catch(() => {
+                setUserDeleted("*****")
 
             })
     }
@@ -50,29 +51,32 @@ function SingleSubject(props) {
     const addCommentary = () => {
         if (token) {
             const trimContained = contained.trim()
+            if (trimContained) {
+                const objectCommentary = {
+                    id_auteur: props.signinStore.userInfo.id,
+                    contained: trimContained,
+                    id_sujet_forum: urlId,
+                    date_commentaires: todayDate()
+                }
+                const headers = {
+                    "Content-Type": "application/json",
+                    authorization: props.signinStore.userToken,
 
-            const objectCommentary = {
-                id_auteur: props.signinStore.userInfo.id,
-                contained: trimContained,
-                id_sujet_forum: urlId,
-                date_commentaires: todayDate()
+                };
+                axios.post('http://localhost:8000/subject/commentaries', objectCommentary, { headers: headers })
+                    .then(() => {
+                        setAxiosFailed(false)
+                        setAddComment(true)
+                        setTextComment(false)
+                        setTimeout(() => {
+                            props.history.push("/forum")
+                        }, 4000);
+                    }).catch(() => {
+                        setAxiosFailed(true)
+                    })
+            } else {
+                setTextComment(true)
             }
-            const headers = {
-                "Content-Type": "application/json",
-                authorization: props.signinStore.userToken,
-
-            };
-            axios.post('http://localhost:8000/subject/commentaries', objectCommentary, { headers: headers })
-                .then(() => {
-                    setAddComment(true)
-                    setTimeout(() => {
-                        props.history.push("/forum")
-                    }, 4000);
-                }).catch(err => {
-                    if (err.response.status === 403) {
-
-                    }
-                })
         } else {
             setIncorrect(true)
         }
@@ -86,13 +90,17 @@ function SingleSubject(props) {
         return newDate;
     }
 
-
-
     useEffect(() => {
-        subject()
-        if (subjectInfo) {
-            getInfoOwnerSubject()
+        async function test() {
+            await subject()
+            if (subjectInfo) {
+                getInfoOwnerSubject()
+            }
         }
+        test()
+
+
+
     }, [urlId, subjectInfo]);
     return (
         <div className=" page-container theme-blue">
@@ -109,7 +117,7 @@ function SingleSubject(props) {
                                 </div>
                                 <div>
                                     <img className="img-avatar" src={ownerSubject.avatar} onError={defaultSrc} alt="avatar" />
-                                    <p>{ownerSubject.pseudo}</p>
+                                    <p className="font-bold">{ownerSubject.pseudo}</p>
                                 </div>
                                 <div>{subjectInfo.contenu}</div>
                                 <hr></hr>
@@ -123,7 +131,6 @@ function SingleSubject(props) {
                                 <p className="date_color">{handleDateFormat(subjectInfo.date)}</p>
                             </div>
                             <div className="subject-pseudo-avatar">
-
                                 <p id="pl-1">{userDeleted}</p>
                             </div>
                             <div>{subjectInfo.contenu}</div>
@@ -131,17 +138,16 @@ function SingleSubject(props) {
                             <hr className="width-80"></hr>
                             <CommentariesSubject idSubject={urlId} />
                         </>}
-
                     <div className="width-80">
                         <p className="title_color">AJOUTER UN COMMENTAIRE</p>
                         <textarea name="contained" id="contained" placeholder="Ecriver votre texte ici" required onChange={e => setContained(e.target.value)} />
                         <button className="btn btn-red " onClick={addCommentary} disabled={addComment}> VALIDER VOTRE COMMENTAIRE</button>
-
+                        {textComment ? <p className="text-error">Veuillez remplir le champ pour poster un commentaire</p> : null}
+                        {axiosFailed ? <p className="text-error">Une erreur s'est produite lors de la création du Sujet</p> : null}
                         {addComment ? <p className="text-success"> Votre commentaire a bien été ajouté, vous allez être redirigé sur la page forum</p> : null}
                         {incorrect ? <p className="text-error">Vous devez être connecté pour poster un commentaire</p> : null}
                     </div>
                 </div>
-                        -
             </div>
             < FooterForum />
         </div >

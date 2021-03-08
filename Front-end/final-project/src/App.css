@@ -1,7 +1,11 @@
 /* TAG */
-tr{
+.tables tr{
     background-color: #020f18cb;
 }
+.table-admin tr{
+    background-color: #1B2625;
+}
+
 th{
     height: 50px;
     font-weight: normal;
@@ -30,6 +34,11 @@ textarea{
 /* HEADER */
 .header{
     min-height: 25%;
+}
+
+/* FONT */
+.italic{
+    font-style: italic;
 }
 
 /* BUTTON */ 
@@ -71,7 +80,8 @@ textarea{
 
 
 /* TEXT */
-.text-center { text-align: center; }
+.font-bold { font-weight: bold;}
+.text-centered { text-align: center; }
 
 .text-error        { color: #f00;       }
 .text-success      { color: #0f0;       }

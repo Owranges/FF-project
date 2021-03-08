@@ -32,12 +32,8 @@ function Signup(props) {
                         setValidation(false)
                         props.history.push("/sign-in");
                     }
-                }).catch(err => {
-                    if (err.response.status === 403) {
-                        setIncorrect(true)
-                    } else if (err.response.data === "This pseudo is already use") {
-                        setIncorrect(true)
-                    }
+                }).catch(() => {
+                    setIncorrect(true)
                 })
         } else {
             setValidation(true)
@@ -57,6 +53,7 @@ function Signup(props) {
                 </div>
                 <div className="img-section-separator"></div>
                 <div className="page-row py-4">
+                    {incorrect ? <p className='text-error'>Veuillez saisir une adresse-email valide</p> : null}
                     <form onSubmit={handleSubmit} className="form text-greensad">
                         <div>
                             <label >Adresse Mail:</label>
@@ -79,12 +76,12 @@ function Signup(props) {
                             <input className="input-control" type="avatar" name="avatar" id="avatar" placeholder="lien Url" required onChange={e => setAvatar(e.target.value)} />
                         </div>
                         {validations ? <div className='text-error'> Veuillez respecter le format des champs</div> : null}
-                        <div className='text-center'>
+                        <div className='text-centered'>
                             <button className="btn btn-green" onClick={formSubmit}>INSCRIPTION</button>
                         </div>
                     </form>
 
-                    {incorrect ? <p className='text-error'>Cette email est déjà utilisé</p> : null}
+
                 </div>
             </div>
             < Footer />

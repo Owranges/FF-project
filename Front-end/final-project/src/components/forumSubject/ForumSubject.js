@@ -14,7 +14,8 @@ function ForumSubject(props) {
 
     const token = props.signinStore.userToken;
     const [incorrect, setIncorrect] = useState(false)
-    const [createSubject, setCreateSubject] = useState(false)
+    const [errorInsert, setErrorInsert] = useState(false)
+    const [notConnected, setNotConnected] = useState(false)
     const [subjectCreated, setSubjectCreated] = useState(false)
     const [contained, setContained] = useState('')
     const [title_subject, setTitle_Subject] = useState('')
@@ -24,7 +25,7 @@ function ForumSubject(props) {
     }
     const addSubject = () => {
         if (token) {
-            setCreateSubject(false)
+            setNotConnected(false)
             const trimContained = contained.trim()
             const trimTitle = title_subject.trim()
             if (trimContained && trimTitle) {
@@ -44,22 +45,20 @@ function ForumSubject(props) {
                     .then(() => {
                         props.newSubjectAction(formValues)
                         setSubjectCreated(true)
+                        setErrorInsert(false)
                         setIncorrect(false)
                         setTimeout(() => {
                             props.history.push("/forum")
                         }, 4000);
-                    }).catch(err => {
-
-                        if (err.response.status === 403) {
-                            setIncorrect(true)
-                        }
+                    }).catch(() => {
+                        setErrorInsert(true)
                     })
             } else {
                 setIncorrect(true)
             }
 
         } else {
-            setCreateSubject(true)
+            setNotConnected(true)
         }
     }
 
@@ -95,7 +94,8 @@ function ForumSubject(props) {
                         <hr></hr>
                         <button className="btn btn-red " onClick={addSubject} disabled={subjectCreated}> VALIDER VOTRE SUJET</button>
                     </div>
-                    {createSubject ? <p className="text-error width-80">Vous devez être connecté pour poster un sujet</p> : null}
+                    {notConnected ? <p className="text-error width-80">Vous devez être connecté pour poster un sujet</p> : null}
+                    {errorInsert ? <p className="text-error width-80">Une erreur s'est produit lors de l'insertion</p> : null}
                     {incorrect ? <p className="text-error width-80">Vous devez mettre un titre et rédiger du contenu pour créer votre sujet</p> : null}
                     {subjectCreated ? <p className="text-success width-80">Votre sujet a bien été créé, vous allez être redirigé sur la page forum d'ici quelques secondes.</p> : null}
                 </div>
