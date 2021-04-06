@@ -31,11 +31,23 @@ function SingleSubject(props) {
         new Date().toISOString().slice(0, 10)
     )
     const subject = async () => {
+        console.log(props.forumSubject.forumSubject);
         let mySubject = await props.forumSubject.forumSubject.find(
             (subj) => subj.id == urlId
         )
         setSubjectInfo(mySubject);
     };
+
+    const getSubjectInfo = () => {
+        axios.get(`http://localhost:8000/subject/${urlId}`)
+            .then(response => {
+
+                setOwnerSubject(response.data[0]);
+            }).catch(() => {
+                setUserDeleted("*****")
+
+            })
+    }
 
     const getInfoOwnerSubject = () => {
         axios.get(`http://localhost:8000/user/${subjectInfo.id_utilisateur}`)
@@ -83,7 +95,7 @@ function SingleSubject(props) {
 
     }
 
-
+    console.log(subjectInfo);
     function handleDateFormat(date) {
         let currentDate = date;
         var newDate = new Date(currentDate).toLocaleDateString("sq-AL", { year: 'numeric', month: '2-digit', day: '2-digit' });

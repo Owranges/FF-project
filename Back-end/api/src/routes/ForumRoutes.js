@@ -28,7 +28,7 @@ const forumRoutes = async function (router, con) {
     // GET ALL SUBJECT 
     await router.get("/subject", (req, res) => {
         try {
-            con.query(`SELECT sujet_forum.id, sujet_forum.date, sujet_forum.id_utilisateur, title_subject, utilisateurs.administ, utilisateurs.pseudo 
+            con.query(`SELECT sujet_forum.id, sujet_forum.date, sujet_forum.id_utilisateur, sujet_forum.contenu, title_subject, utilisateurs.administ, utilisateurs.pseudo 
             FROM sujet_forum 
             INNER JOIN utilisateurs 
             ON sujet_forum.id_utilisateur  = utilisateurs.id

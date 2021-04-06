@@ -13,6 +13,7 @@ const initialStates = {
 };
 
 const forumSubjectReducer = (state = initialStates, action) => {
+    console.log(action.payload);
     switch (action.type) {
         case "GETSUBJECT":
             return {

@@ -22,7 +22,7 @@ function Forum(props) {
                     setIncorrect(true)
                 } else {
                     setForumSubject(response.data)
-
+                    console.log(response.data);
                     props.forumSubjectAction(response.data);
                 }
             }).catch(() => {
