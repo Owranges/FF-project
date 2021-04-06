@@ -22,20 +22,20 @@ MAQUETTE
 
 TECHNOLOGIES
   
-  Node.js</br>
-  MySQL</br>
-  Bcrypt</br>
-  JsonWebToken</br>
-  Express</br>
-  middleware</br>
-  React.js</br>
-  Redux</br>
-  Redux-persist</br>
-  Axios</br>
-  React Router</br>
-  BootStrap-React</br>
-  Yup
-  ...
+  - Node.js</br>
+  - MySQL</br>
+  - Bcrypt</br>
+  - JsonWebToken</br>
+  - Express</br>
+  - middleware</br>
+  - React.js</br>
+  - Redux</br>
+  - Redux-persist</br>
+  - Axios</br>
+  - React Router</br>
+  - BootStrap-React</br>
+  - Yup
+  - ...
   </br>
   
   
@@ -44,6 +44,7 @@ SCREENSHOT</br>
 ![image](https://user-images.githubusercontent.com/61117157/113586587-fac76b80-962d-11eb-9126-79b1e6082391.png)</br>
 ![image](https://user-images.githubusercontent.com/61117157/113586829-49750580-962e-11eb-963b-8f92dfab34b6.png)</br>
 ![image](https://user-images.githubusercontent.com/61117157/113587075-98229f80-962e-11eb-8456-3874f2c4f8af.png)</br>
+
 
 
 
